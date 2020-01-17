@@ -9,20 +9,32 @@
             "email": "hi@alanwgt.com"
         }
     ],
-    "require": {},
-    "require-dev": {
-        "orchestra/testbench": "^4.0"
+    "require": {
+      "guzzlehttp/guzzle": "~6.0",
+      "ext-json": "*"
     },
-    "autoload": { 
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
         "psr-4": {
             "Jetimob\\Juno\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jetimob\\Juno\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
                 "Jetimob\\Juno\\JunoServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Juno": "Jetimob\\Juno\\Facades\\Juno"
+            }
         }
     }
 }

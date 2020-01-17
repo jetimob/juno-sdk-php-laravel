@@ -1,0 +1,43 @@
+<?php
+
+namespace Jetimob\Juno;
+
+use Illuminate\Support\ServiceProvider;
+use Jetimob\Juno\Console\InstallJunoPackage;
+
+class JunoServiceProvider extends ServiceProvider
+{
+    private function getConfigPath(): string
+    {
+        return sprintf('%s/../config/config.php', __DIR__);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function register()
+    {
+        $this->app->bind('juno', function ($app) {
+            return new Juno();
+        });
+
+        $this->mergeConfigFrom($this->getConfigPath(), 'juno');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            // publishes config file
+            $this->publishes([
+                $this->getConfigPath() => config_path('juno.php')
+            ], 'config');
+
+            $this->commands([
+                InstallJunoPackage::class,
+            ]);
+        }
+    }
+}
