@@ -46,4 +46,18 @@ class ErrorDetail
     {
         return $this->field;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $ss = sprintf('[ERROR_CODE %s]: %s', $this->errorCode, $this->message);
+
+        if (!empty($this->field)) {
+            $ss .= sprintf('\n[FIELD]: %s', $this->field);
+        }
+
+        return $ss;
+    }
 }

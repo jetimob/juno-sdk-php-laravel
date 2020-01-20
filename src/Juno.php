@@ -4,8 +4,11 @@ namespace Jetimob\Juno;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Jetimob\Juno\Exception\JunoCastException;
 use Jetimob\Juno\Exception\JunoException;
 use Jetimob\Juno\Lib\Billet;
+use Jetimob\Juno\Lib\Http\Request;
+use Jetimob\Juno\Lib\Http\Response;
 
 /**
  * Class Juno
@@ -34,7 +37,7 @@ class Juno
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
             if (!array_key_exists($key, $config)) {
                 throw new JunoException(sprintf(
-                    'Missing required keys in juno\'s configuration file [%s]',
+                    'missing required keys in juno\'s configuration file [%s]',
                     implode(', ', self::CONFIG_REQUIRED_KEYS),
                 ));
             }
@@ -53,18 +56,31 @@ class Juno
         $this->client = new Client($gruzzleOptions);
     }
 
-    public function request()
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws Exception\MissingPropertyBodySchemaException
+     * @throws JunoCastException
+     */
+    public function request(Request $request): Response
     {
-        $this->client->request('', );
-    }
+        $response = $this->client->request(
+            $request->getMethod(),
+            $request->getUrn(),
+            [
+                'json' => $request->build()
+            ]
+        );
 
-    public function __get($arg)
-    {
-        if (!array_key_exists($arg, $this->instances)) {
-            $this->instances[$arg] = JunoFactory::make($arg, $this);
+        $castResponse = null;
+
+        try {
+            $castResponse = new ($request->getResponseClass())($response);
+        } catch (\Exception $e) {
+            throw new JunoCastException('', '', $e);
         }
 
-        return $this->instances[$arg];
+        return $castResponse;
     }
 
     private const CONFIG_REQUIRED_KEYS = [
