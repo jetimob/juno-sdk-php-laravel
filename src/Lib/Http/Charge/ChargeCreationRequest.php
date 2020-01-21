@@ -36,4 +36,17 @@ class ChargeCreationRequest extends Request
     protected array $bodySchema = ['charge', 'billing'];
 
     protected string $responseClass = ChargeCreationResponse::class;
+
+    /**
+     * ChargeCreationRequest constructor.
+     * @param Charge $charge
+     * @param Billing $billing
+     */
+    public function __construct(Charge $charge, Billing $billing)
+    {
+        $this->charge = $charge;
+        $this->billing = $billing;
+    }
+
+
 }

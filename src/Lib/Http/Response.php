@@ -3,7 +3,7 @@
 namespace Jetimob\Juno\Lib\Http;
 
 use Jetimob\Juno\Exception\JunoResponseException;
-use Jetimob\Juno\Lib\ErrorDetail;
+use Jetimob\Juno\Lib\Model\ErrorDetail;
 use Jetimob\Juno\Lib\Reflect;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Facades\Log;
@@ -14,18 +14,6 @@ abstract class Response
     private bool $successful;
 
     private int $code;
-
-    // ----- ERROR PROPERTIES -----
-
-    private string $timestamp;
-
-    private int $status;
-
-    private string $error;
-
-    private array $details;
-
-    private string $path;
 
     /**
      * JunoResponse constructor.
@@ -51,29 +39,33 @@ abstract class Response
     private function constructFromError(array $body)
     {
         $this->successful = false;
-        $this->timestamp = $body['timestamp'];
-        $this->status = $body['status'];
-        $this->error = $body['error'];
-        $this->details = [];
-        $this->path = $body['path'];
-
-        if (is_array($details = $body['details']) && count($details) > 0) {
-            foreach ($details as $detail) {
-                if (
-                    !is_array($detail) ||
-                    !array_key_exists('message', $detail) ||
-                    !array_key_exists('errorCode', $detail)
-                ) {
-                    continue;
-                }
-
-                $this->details[] = new ErrorDetail(
-                    $detail['message'],
-                    $detail['errorCode'],
-                    $detail['string'] ?? '',
-                );
-            }
-        }
+        $this->mergeArrayIntoInstance($body);
+//        $this->timestamp = $body['timestamp'];
+//        $this->status = $body['status'];
+//        $this->error = $body['error'];
+//        $this->details = [];
+//        $this->path = $body['path'];
+//
+//        if (is_array($details = $body['details']) && count($details) > 0) {
+//            foreach ($details as $detail) {
+//                if (!is_array($detail)) {
+//                    $detail = json_decode(json_encode($detail), true);
+//                }
+//
+//                if (
+//                    !array_key_exists('message', $detail) ||
+//                    !array_key_exists('errorCode', $detail)
+//                ) {
+//                    continue;
+//                }
+//
+//                $this->details[] = new ErrorDetail(
+//                    $detail['message'],
+//                    $detail['errorCode'],
+//                    $detail['string'] ?? '',
+//                );
+//            }
+//        }
     }
 
     private function mergeArrayIntoInstance(array $data): void
@@ -103,6 +95,27 @@ abstract class Response
 
     public function __toString()
     {
-        return '';
+        $fPrintProp = function (array $properties) {
+            $data = [];
+
+            foreach ($properties as $p) {
+                $data[$p] = $this->{$p};
+            }
+
+            return json_encode($data, JSON_PRETTY_PRINT);
+        };
+
+        if (!$this->successful) {
+            return $fPrintProp(['timestamp', 'status', 'error', 'details', 'path']);
+        }
+
+        $props = Reflect::properties(ReflectionProperty::IS_PROTECTED, $this);
+        $propsNames = [];
+
+        foreach ($props as $p) {
+            $propsNames[] = $p->getName();
+        }
+
+        return $fPrintProp($propsNames);
     }
 }

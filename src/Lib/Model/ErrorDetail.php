@@ -1,6 +1,6 @@
 <?php
 
-namespace Jetimob\Juno\Lib;
+namespace Jetimob\Juno\Lib\Model;
 
 class ErrorDetail
 {

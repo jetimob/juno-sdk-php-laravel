@@ -61,7 +61,7 @@ abstract class Request
         $data = [];
 
         foreach ($this->bodySchema as $property) {
-            if (!isset($this->{$property})) {
+            if (!property_exists($this, $property)) {
                 throw new MissingPropertyBodySchemaException($property, $this);
             }
 

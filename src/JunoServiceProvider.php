@@ -17,11 +17,11 @@ class JunoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('juno', function ($app) {
-            return new Juno();
-        });
-
         $this->mergeConfigFrom($this->getConfigPath(), 'juno');
+
+        $this->app->bind('juno', function ($app) {
+            return new Juno($app->config->get('juno'));
+        });
     }
 
     /**
