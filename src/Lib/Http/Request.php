@@ -54,7 +54,6 @@ abstract class Request
     public function build(): array
     {
         if (count($this->bodySchema) === 0) {
-            Log::warning(sprintf("empty \$bodySchema declared in %s", get_class($this)));
             return [];
         }
 

@@ -3,7 +3,6 @@
 namespace Jetimob\Juno\Lib\Http;
 
 use Jetimob\Juno\Exception\JunoResponseException;
-use Jetimob\Juno\Lib\Model\ErrorDetail;
 use Jetimob\Juno\Lib\Reflect;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Facades\Log;
@@ -15,83 +14,71 @@ abstract class Response
 
     private int $code;
 
+//    /**
+//     * JunoResponse constructor.
+//     * @param ResponseInterface $response
+//     * @throws JunoResponseException
+//     */
+//    public function __construct()
+//    {
+////        if ($data === null || $data === false) {
+////            throw new JunoResponseException('unable to decode Juno\'s API response');
+////        }
+//    }
+
     /**
-     * JunoResponse constructor.
-     * @param ResponseInterface $response
-     * @throws JunoResponseException
+     * @param array|ResponseInterface $response
+     * @return $this
      */
-    public function __construct(ResponseInterface $response)
+    public static function deserialize($response): Response
     {
-        $data = json_decode($response->getBody()->getContents(), true);
-        $this->code = $response->getStatusCode();
-
-        if ($data === null || $data === false) {
-            throw new JunoResponseException('unable to decode Juno\'s API response');
-        }
-
-        if (array_key_exists('error', $data)) {
-            $this->constructFromError($data);
+        if ($response instanceof ResponseInterface) {
+            $data = $response->getBody()->getContents();
         } else {
-            $this->constructFromSuccess($data);
+            $data = $response;
         }
-    }
 
-    private function constructFromError(array $body)
-    {
-        $this->successful = false;
-        $this->mergeArrayIntoInstance($body);
-//        $this->timestamp = $body['timestamp'];
-//        $this->status = $body['status'];
-//        $this->error = $body['error'];
-//        $this->details = [];
-//        $this->path = $body['path'];
-//
-//        if (is_array($details = $body['details']) && count($details) > 0) {
-//            foreach ($details as $detail) {
-//                if (!is_array($detail)) {
-//                    $detail = json_decode(json_encode($detail), true);
-//                }
-//
-//                if (
-//                    !array_key_exists('message', $detail) ||
-//                    !array_key_exists('errorCode', $detail)
-//                ) {
-//                    continue;
-//                }
-//
-//                $this->details[] = new ErrorDetail(
-//                    $detail['message'],
-//                    $detail['errorCode'],
-//                    $detail['string'] ?? '',
-//                );
-//            }
-//        }
-    }
+        $className = get_called_class();
+        $instance = new $className();
 
-    private function mergeArrayIntoInstance(array $data): void
-    {
-        $protectedProperties = Reflect::properties(ReflectionProperty::IS_PROTECTED, $this);
+        if (is_string($data)) {
+            $data = json_decode($data);
+        }
 
-        foreach ($protectedProperties as $property) {
-            $pName = $property->getName();
-
-            if (!array_key_exists($pName, $data)) {
-                Log::warning('missing property in array', [
-                    'property' => $pName,
-                    'data' => $data,
-                ]);
+        foreach ($data as $key => $value) {
+            if (!property_exists($instance, $key)) {
                 continue;
             }
 
-            $this->{$property} = $data[$pName];
+            $instance->{$key} = $value;
         }
+
+        return $instance;
     }
 
-    private function constructFromSuccess(array $body)
+    public static function deserializeArray(array $data)
     {
-        $this->successful = true;
-        $this->mergeArrayIntoInstance($body);
+        $data = json_decode($data);
+        $items = [];
+
+        foreach ($data as $item) {
+            $items[] = self::deserialize($item);
+        }
+
+        return $items;
     }
+
+    public function failed()
+    {
+        return $this instanceof ErrorResponse;
+    }
+
+    /**
+     * This function MUST be response specific as at this point there is no way to cast the
+     * @param array $objectData
+     * @return mixed
+     */
+    abstract protected function initComplexObjects(array $objectData);
 
     public function __toString()
     {
@@ -105,7 +92,7 @@ abstract class Response
             return json_encode($data, JSON_PRETTY_PRINT);
         };
 
-        if (!$this->successful) {
+        if ($this->failed()) {
             return $fPrintProp(['timestamp', 'status', 'error', 'details', 'path']);
         }
 

@@ -2,10 +2,9 @@
 
 namespace Jetimob\Juno\Lib\Http;
 
-use Psr\Http\Message\ResponseInterface;
-use Throwable;
+use Jetimob\Juno\Lib\Model\ErrorDetail;
 
-class ErrorResponse extends Response implements Throwable
+class ErrorResponse extends Response
 {
     protected string $timestamp;
 
@@ -17,46 +16,28 @@ class ErrorResponse extends Response implements Throwable
 
     protected string $path;
 
-    private array $stack;
-
-    public function __construct(ResponseInterface $response)
+    protected function initComplexObjects(array $data)
     {
-        parent::__construct($response);
-        $this->stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-    }
+        $details = $data['details'] ?? [];
+        $this->details = [];
 
-    public function getMessage()
-    {
-        return '';
-    }
+        foreach ($details as $detail) {
+            if (!is_array($detail)) {
+                $detail = json_decode(json_encode($detail), true);
+            }
 
-    public function getCode()
-    {
-        return 0;
-    }
+            if (
+                !array_key_exists('message', $detail) ||
+                !array_key_exists('errorCode', $detail)
+            ) {
+                continue;
+            }
 
-    public function getFile()
-    {
-        return $this->stack[1]['file'];
-    }
-
-    public function getLine()
-    {
-        return $this->stack[1]['line'];
-    }
-
-    public function getTrace()
-    {
-        return $this->stack;
-    }
-
-    public function getTraceAsString()
-    {
-        return json_encode($this->stack);
-    }
-
-    public function getPrevious()
-    {
-        return $this->stack[1];
+            $this->details[] = new ErrorDetail(
+                $detail['message'],
+                $detail['errorCode'],
+                $detail['string'] ?? '',
+            );
+        }
     }
 }

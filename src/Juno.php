@@ -91,7 +91,12 @@ class Juno
         return '';
     }
 
-    public function requestAccessToken(): AuthorizationResponse
+    /**
+     * @return AuthorizationResponse|ErrorResponse
+     * @throws Exception\MissingPropertyBodySchemaException
+     * @throws JunoCastException
+     */
+    public function requestAccessToken()
     {
         return $this->request(new AuthorizationRequest(), $this->authzClient);
     }
@@ -99,13 +104,12 @@ class Juno
     /**
      * @param Request|string $request
      * @param Client|null $client
-     * @return Response
+     * @return Response|ErrorResponse
      * @throws Exception\MissingPropertyBodySchemaException
      * @throws JunoCastException
      * @throws ErrorResponse
-     * @throws Exception\JunoResponseException
      */
-    public function request($request, $client = null): Response
+    public function request($request, $client = null)
     {
         if (is_string($request)) {
             $request = new $request();
@@ -127,10 +131,10 @@ class Juno
                 ]
             );
 
-            $refl = new \ReflectionClass($request->getResponseClass());
-            $instance = $refl->newInstanceArgs([$response]);
+//            $instance = call_user_func(sprintf("%s::deserialize", $request->getResponseClass()), [$response]);
+            $instance = ($request->getResponseClass())::deserialize($response);
         } catch (ClientException $e) {
-            throw new ErrorResponse($e->getResponse());
+            $instance = ErrorResponse::deserialize($e->getResponse());
         } catch (\Exception $e) {
             Console::log($e);
             throw new JunoCastException('', '', $e);
