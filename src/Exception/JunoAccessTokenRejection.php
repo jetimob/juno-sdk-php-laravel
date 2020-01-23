@@ -2,7 +2,7 @@
 
 namespace Jetimob\Juno\Exception;
 
-class JunoResponseException extends JunoException
+class JunoAccessTokenRejection extends JunoException
 {
     public function __construct($message = "", $code = 0, $previous = null)
     {

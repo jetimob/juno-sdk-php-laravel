@@ -6,6 +6,10 @@ class Console
 {
     public static function log($msg)
     {
+        if (is_null($msg)) {
+            $msg = 'NULL';
+        }
+
         $encode = fn ($m) => json_encode($msg, JSON_PRETTY_PRINT);
 
         if (is_array($msg)) {

@@ -25,17 +25,32 @@ use Psr\Http\Message\ResponseInterface;
  */
 class ChargeCreationResponse extends Response
 {
-    /**
-     * @var object $_embedded
-     * @property ChargeResource[] $charges
-     */
-    protected object $_embedded;
+    /** @var ChargeResource[] $charges */
+    protected array $charges;
 
     /** @var Link[] $_links */
-    protected array $_links;
+    protected ?array $_links = null;
 
-    public function __construct(ResponseInterface $response)
+    public function initComplexObjects()
     {
-        parent::__construct($response);
+//        $charges = $this->data['_embedded']['charges'];
+        $charges = $this->data->_embedded->charges;
+        $this->charges = ChargeResource::deserializeArray($charges);
+    }
+
+    /**
+     * @return ChargeResource[]
+     */
+    public function getCharges(): array
+    {
+        return $this->charges;
+    }
+
+    /**
+     * @return Link[]
+     */
+    public function getLinks(): array
+    {
+        return $this->_links;
     }
 }

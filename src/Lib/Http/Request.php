@@ -2,7 +2,6 @@
 
 namespace Jetimob\Juno\Lib\Http;
 
-use Illuminate\Support\Facades\Log;
 use Jetimob\Juno\Exception\MissingPropertyBodySchemaException;
 
 abstract class Request
@@ -14,6 +13,15 @@ abstract class Request
     protected string $responseClass;
 
     protected array $bodySchema = [];
+
+    protected bool $jsonBody = true;
+
+    private int $timestamp;
+
+    public function __construct()
+    {
+        $this->timestamp = time();
+    }
 
     /**
      * @return string
@@ -46,6 +54,24 @@ abstract class Request
     {
         return $this->bodySchema;
     }
+
+    /**
+     * @return bool
+     */
+    public function isJsonBody(): bool
+    {
+        return $this->jsonBody;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimestamp(): int
+    {
+        return $this->timestamp;
+    }
+
+
 
     /**
      * @return array

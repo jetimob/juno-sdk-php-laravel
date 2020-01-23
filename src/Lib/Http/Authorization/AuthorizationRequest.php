@@ -16,4 +16,6 @@ class AuthorizationRequest extends Request
     protected array $bodySchema = ['grant_type'];
 
     protected string $responseClass = AuthorizationResponse::class;
+
+    protected bool $jsonBody = false;
 }

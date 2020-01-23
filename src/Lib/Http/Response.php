@@ -2,83 +2,40 @@
 
 namespace Jetimob\Juno\Lib\Http;
 
-use Jetimob\Juno\Exception\JunoResponseException;
 use Jetimob\Juno\Lib\Reflect;
-use Psr\Http\Message\ResponseInterface;
-use Illuminate\Support\Facades\Log;
+use Jetimob\Juno\Lib\Traits\Serializable;
 use ReflectionProperty;
 
 abstract class Response
 {
-    private bool $successful;
+    use Serializable;
 
-    private int $code;
+    private int $timestamp;
 
-//    /**
-//     * JunoResponse constructor.
-//     * @param ResponseInterface $response
-//     * @throws JunoResponseException
-//     */
-//    public function __construct()
-//    {
-////        if ($data === null || $data === false) {
-////            throw new JunoResponseException('unable to decode Juno\'s API response');
-////        }
-//    }
+    public function __construct()
+    {
+        $this->timestamp = time();
+    }
 
     /**
-     * @param array|ResponseInterface $response
-     * @return $this
+     * @return int
      */
-    public static function deserialize($response): Response
+    public function getTimestamp(): int
     {
-        if ($response instanceof ResponseInterface) {
-            $data = $response->getBody()->getContents();
-        } else {
-            $data = $response;
-        }
-
-        $className = get_called_class();
-        $instance = new $className();
-
-        if (is_string($data)) {
-            $data = json_decode($data);
-        }
-
-        foreach ($data as $key => $value) {
-            if (!property_exists($instance, $key)) {
-                continue;
-            }
-
-            $instance->{$key} = $value;
-        }
-
-        return $instance;
+        return $this->timestamp;
     }
 
-    public static function deserializeArray(array $data)
-    {
-        $data = json_decode($data);
-        $items = [];
-
-        foreach ($data as $item) {
-            $items[] = self::deserialize($item);
-        }
-
-        return $items;
-    }
-
+    /**
+     * @return bool
+     */
     public function failed()
     {
         return $this instanceof ErrorResponse;
     }
 
-    /**
-     * This function MUST be response specific as at this point there is no way to cast the
-     * @param array $objectData
-     * @return mixed
-     */
-    abstract protected function initComplexObjects(array $objectData);
+    public function initComplexObjects()
+    {
+    }
 
     public function __toString()
     {
@@ -86,6 +43,10 @@ abstract class Response
             $data = [];
 
             foreach ($properties as $p) {
+                if (empty($this->{$p})) {
+                    continue;
+                }
+
                 $data[$p] = $this->{$p};
             }
 
@@ -96,7 +57,7 @@ abstract class Response
             return $fPrintProp(['timestamp', 'status', 'error', 'details', 'path']);
         }
 
-        $props = Reflect::properties(ReflectionProperty::IS_PROTECTED, $this);
+        $props = Reflect::properties(ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC, $this);
         $propsNames = [];
 
         foreach ($props as $p) {

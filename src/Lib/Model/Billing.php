@@ -19,9 +19,9 @@ class Billing
     /** @var string|null $phone [0 .. 25] chars */
     public ?string $phone;
 
-    /** @var string|null $birthDate <date-time> */
+    /** @var string|null $birthDate <date-time> e*/
     public ?string $birthDate;
 
-    /** @var bool|null $notify */
+    /** @var bool|null $notify sends a e-mail notifying the user */
     public ?bool $notify;
 }

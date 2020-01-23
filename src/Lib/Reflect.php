@@ -2,7 +2,7 @@
 
 namespace Jetimob\Juno\Lib;
 
-use Illuminate\Support\Facades\Log;
+use Jetimob\Juno\Util\Log;
 
 class Reflect
 {
@@ -16,5 +16,15 @@ class Reflect
         }
 
         return [];
+    }
+
+    public static function property($name, $instance)
+    {
+        try {
+            $refl = new \ReflectionClass($instance);
+            return $refl->getProperty($name);
+        } catch (\ReflectionException $e) {
+            return null;
+        }
     }
 }
