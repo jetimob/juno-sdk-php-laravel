@@ -3,6 +3,8 @@
 namespace Jetimob\Juno\Lib\Http;
 
 use Jetimob\Juno\Exception\MissingPropertyBodySchemaException;
+use Jetimob\Juno\Util\Console;
+use Jetimob\Juno\Util\Log;
 
 abstract class Request
 {
@@ -36,7 +38,17 @@ abstract class Request
      */
     public function getUrn(): string
     {
-        return $this->urn;
+        $matches = [];
+        $urn = $this->urn;
+
+        if (preg_match('/{([[:alpha:]]+?)}/', $this->urn, $matches)) {
+            if (count($matches) > 2) {
+                Log::warning('only one urn property mapping available at the current time');
+            }
+            $urn = preg_replace('/{[[:alpha:]]+?}/', $this->{$matches[1]}, $urn);
+        }
+
+        return $urn;
     }
 
     /**
@@ -70,8 +82,6 @@ abstract class Request
     {
         return $this->timestamp;
     }
-
-
 
     /**
      * @return array

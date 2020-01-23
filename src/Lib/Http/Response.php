@@ -12,12 +12,16 @@ abstract class Response
 
     private int $timestamp;
 
+    private int $statusCode;
+
     public function __construct()
     {
         $this->timestamp = time();
     }
 
     /**
+     * Returns the timestamp that the response was constructed.
+     *
      * @return int
      */
     public function getTimestamp(): int
@@ -26,6 +30,8 @@ abstract class Response
     }
 
     /**
+     * True if this response failed, false otherwise.
+     *
      * @return bool
      */
     public function failed()
@@ -33,6 +39,29 @@ abstract class Response
         return $this instanceof ErrorResponse;
     }
 
+    /**
+     * Returns the response status code.
+     *
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    public function setStatusCode(int $code): void
+    {
+        if (!empty($this->statusCode)) {
+            return;
+        }
+
+        $this->statusCode = $code;
+    }
+
+    /**
+     * Complex objects (non native) require manual initialization. Override this function to correctly initialize an
+     * object instance.
+     */
     public function initComplexObjects()
     {
     }

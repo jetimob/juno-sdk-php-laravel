@@ -57,6 +57,8 @@ trait Serializable
                         continue;
                     }
                 }
+            } elseif (is_array($value)) {
+                continue;
             } else {
                 $instance->{$key} = $value;
             }

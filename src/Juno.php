@@ -214,6 +214,7 @@ class Juno
             /** @var Response $instance */
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->initComplexObjects();
+            $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException $e) {
             $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
         } catch (Exception $e) {
@@ -231,8 +232,9 @@ class Juno
      * @return string
      * @throws JunoAccessTokenRejection
      * @throws JunoCastException
-     * @throws MissingPropertyBodySchemaException
      * @throws WrongResponseTypeException
+     * @throws WrongRequestTypeException
+     * @throws MissingPropertyBodySchemaException
      */
     private function getAccessToken(): string
     {

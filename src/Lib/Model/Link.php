@@ -2,8 +2,12 @@
 
 namespace Jetimob\Juno\Lib\Model;
 
+use Jetimob\Juno\Lib\Traits\Serializable;
+
 class Link
 {
+    use Serializable;
+
     /**
      * @var object $self
      * @property string $href
