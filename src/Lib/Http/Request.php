@@ -3,15 +3,10 @@
 namespace Jetimob\Juno\Lib\Http;
 
 use Jetimob\Juno\Exception\MissingPropertyBodySchemaException;
-use Jetimob\Juno\Util\Console;
 use Jetimob\Juno\Util\Log;
 
 abstract class Request
 {
-    protected string $method;
-
-    protected string $urn;
-
     protected string $responseClass;
 
     protected array $bodySchema = [];
@@ -34,11 +29,20 @@ abstract class Request
     }
 
     /**
+     * Every extending class MUST declare its method of request.
      * @return string
      */
+    abstract protected function method(): string;
+
+    /**
+     * Every extending class MUST declare its urn.
+     * @return string
+     */
+    abstract protected function urn(): string;
+
     public function getMethod(): string
     {
-        return $this->method;
+        return $this->method();
     }
 
     /**
@@ -47,7 +51,7 @@ abstract class Request
     public function getUrn(): string
     {
         $matches = [];
-        $urn = $this->urn;
+        $urn = $this->getUrn();
 
         if (preg_match('/{([[:alpha:]]+?)}/', $this->urn, $matches)) {
             if (count($matches) > 2) {

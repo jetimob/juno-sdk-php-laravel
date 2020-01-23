@@ -29,13 +29,7 @@ class ChargeCreationRequest extends Request
 
     protected Billing $billing;
 
-    protected string $method = Method::POST;
-
-    protected string $urn = 'charges';
-
     protected array $bodySchema = ['charge', 'billing'];
-
-    protected string $responseClass = ChargeCreationResponse::class;
 
     /**
      * ChargeCreationRequest constructor.
@@ -49,4 +43,13 @@ class ChargeCreationRequest extends Request
     }
 
 
+    protected function method(): string
+    {
+        return Method::POST;
+    }
+
+    protected function urn(): string
+    {
+        return 'charges';
+    }
 }

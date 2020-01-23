@@ -11,10 +11,6 @@ class ChargeConsultRequest extends Request
 
     protected string $method = Method::GET;
 
-    protected string $urn = 'charges/{id}';
-
-    protected string $responseClass = ChargeConsultResponse::class;
-
     /**
      * ChargeConsultRequest constructor.
      * @param string $id
@@ -41,5 +37,15 @@ class ChargeConsultRequest extends Request
     {
         $this->id = $id;
         return $this;
+    }
+
+    protected function method(): string
+    {
+        return Method::GET;
+    }
+
+    protected function urn(): string
+    {
+        return 'charges/{id}';
     }
 }

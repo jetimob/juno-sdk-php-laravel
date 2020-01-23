@@ -9,13 +9,17 @@ class AuthorizationRequest extends Request
 {
     protected string $grant_type = 'client_credentials';
 
-    protected string $method = Method::POST;
-
-    protected string $urn = 'oauth/token';
-
     protected array $bodySchema = ['grant_type'];
 
-    protected string $responseClass = AuthorizationResponse::class;
-
     protected bool $jsonBody = false;
+
+    protected function method(): string
+    {
+        return Method::POST;
+    }
+
+    protected function urn(): string
+    {
+        return 'oauth/token';
+    }
 }
