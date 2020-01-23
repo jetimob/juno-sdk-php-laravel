@@ -72,7 +72,7 @@ abstract class Response
             $data = [];
 
             foreach ($properties as $p) {
-                if (empty($this->{$p})) {
+                if (is_null($this->{$p})) {
                     continue;
                 }
 

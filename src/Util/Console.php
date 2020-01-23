@@ -4,8 +4,12 @@ namespace Jetimob\Juno\Util;
 
 class Console
 {
-    public static function log($msg)
+    public static function log($msg, ...$args)
     {
+        if (count($args) > 0) {
+            $msg = sprintf($msg, ...$args);
+        }
+
         if (is_null($msg)) {
             $msg = 'NULL';
         }

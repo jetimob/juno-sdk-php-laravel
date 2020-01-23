@@ -32,6 +32,10 @@ trait Serializable
             $data = json_decode($data);
         }
 
+        if (empty($data)) {
+            return $instance;
+        }
+
         foreach ($data as $key => $value) {
             if (!property_exists($instance, $key) || !empty($instance->{$key})) {
                 continue;
@@ -61,6 +65,12 @@ trait Serializable
                 continue;
             } else {
                 $instance->{$key} = $value;
+//
+//                if (!$value) {
+//                    $instance->{$key} = self::getDefaultForType($prop->getType()->getName());
+//                } else {
+//                    $instance->{$key} = $value;
+//                }
             }
         }
 
@@ -85,5 +95,25 @@ trait Serializable
         }
 
         return $items;
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    private static function getDefaultForType(string $name)
+    {
+        switch ($name) {
+            case 'string':
+                return '';
+            case 'float':
+                return 0.0;
+            case 'int':
+                return 0;
+            case 'array':
+                return [];
+            default:
+                return null;
+        }
     }
 }

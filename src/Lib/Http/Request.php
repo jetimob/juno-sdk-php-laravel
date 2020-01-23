@@ -23,6 +23,14 @@ abstract class Request
     public function __construct()
     {
         $this->timestamp = time();
+
+        if (empty($this->responseClass)) {
+            $this->responseClass = preg_replace(
+                '/Request$/',
+                '$1Response',
+                get_called_class()
+            );
+        }
     }
 
     /**

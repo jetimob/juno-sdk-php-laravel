@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-      "guzzlehttp/guzzle": "~6.0",
-      "ext-json": "*"
+        "guzzlehttp/guzzle": "~6.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
