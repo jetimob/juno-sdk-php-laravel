@@ -51,9 +51,9 @@ abstract class Request
     public function getUrn(): string
     {
         $matches = [];
-        $urn = $this->getUrn();
+        $urn = $this->urn();
 
-        if (preg_match('/{([[:alpha:]]+?)}/', $this->urn, $matches)) {
+        if (preg_match('/{([[:alpha:]]+?)}/', $urn, $matches)) {
             if (count($matches) > 2) {
                 Log::warning('only one urn property mapping available at the current time');
             }
@@ -101,15 +101,19 @@ abstract class Request
      */
     public function build(): array
     {
-        if (count($this->bodySchema) === 0) {
+        if (count($this->getBodySchema()) === 0) {
             return [];
         }
 
         $data = [];
 
-        foreach ($this->bodySchema as $property) {
+        foreach ($this->getBodySchema() as $property) {
             if (!property_exists($this, $property)) {
                 throw new MissingPropertyBodySchemaException($property, $this);
+            }
+
+            if (!isset($this->{$property})) {
+                continue;
             }
 
             $data[$property] = $this->{$property};
@@ -117,4 +121,16 @@ abstract class Request
 
         return json_decode(json_encode($data), true);
     }
+
+    /**
+     * @param int|string $year
+     * @param int|string $month
+     * @param int|string $day
+     * @return string
+     */
+    public function formatDate($year, $month, $day): string
+    {
+        return sprintf('%s-%s-%s', $year, $month, $day);
+    }
+
 }

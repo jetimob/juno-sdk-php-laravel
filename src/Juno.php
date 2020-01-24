@@ -213,7 +213,6 @@ class Juno
 
             /** @var Response $instance */
             $instance = $className::deserialize($response->getBody()->getContents());
-            $instance->initComplexObjects();
             $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException $e) {
             $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
@@ -221,6 +220,7 @@ class Juno
             throw new JunoCastException($e);
         }
 
+        $instance->initComplexObjects();
         return $instance;
     }
 

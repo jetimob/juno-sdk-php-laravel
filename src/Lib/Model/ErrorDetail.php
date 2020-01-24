@@ -2,26 +2,17 @@
 
 namespace Jetimob\Juno\Lib\Model;
 
+use Jetimob\Juno\Lib\Traits\Serializable;
+
 class ErrorDetail
 {
+    use Serializable;
+
     private string $message;
 
     private string $errorCode;
 
     private ?string $field = null;
-
-    /**
-     * ErrorDetail constructor.
-     * @param string $message
-     * @param string $errorCode
-     * @param string|null $field
-     */
-    public function __construct(string $message, string $errorCode, ?string $field = null)
-    {
-        $this->message = $message;
-        $this->errorCode = $errorCode;
-        $this->field = $field;
-    }
 
     /**
      * @return string

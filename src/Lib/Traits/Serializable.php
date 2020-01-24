@@ -3,7 +3,6 @@
 namespace Jetimob\Juno\Lib\Traits;
 
 use Jetimob\Juno\Lib\Reflect;
-use Jetimob\Juno\Util\Console;
 use Jetimob\Juno\Util\Log;
 
 trait Serializable
@@ -84,6 +83,14 @@ trait Serializable
     public function setData(object $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return object
+     */
+    public function getData(): object
+    {
+        return $this->data;
     }
 
     public static function deserializeArray(array $data)

@@ -15,8 +15,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.5",
-        "barryvdh/laravel-ide-helper": "^2.6"
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {

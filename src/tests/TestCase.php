@@ -14,18 +14,15 @@ use Jetimob\Juno\Lib\Http\Charge\ChargeConsultResponse;
 use Jetimob\Juno\Lib\Http\Charge\ChargeCreationRequest;
 use Jetimob\Juno\Lib\Http\Charge\ChargeCreationResponse;
 use Jetimob\Juno\Lib\Http\ErrorResponse;
+use Jetimob\Juno\Lib\Http\Response;
 use Jetimob\Juno\Lib\Model\Billing;
 use Jetimob\Juno\Lib\Model\Charge;
 use Jetimob\Juno\Lib\Model\ChargeResource;
+use Jetimob\Juno\Lib\Model\ErrorDetail;
 use Jetimob\Juno\Util\Console;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-    }
 //
 //    public function getEnvironmentSetUp($app)
 //    {
@@ -34,82 +31,107 @@ class TestCase extends \Orchestra\Testbench\TestCase
 //        ];
 //    }
 //
-    public function getPackageProviders($app)
+    protected function getPackageProviders($app)
     {
         return [JunoServiceProvider::class];
     }
 
-    public function testBalanceConsult()
+    protected function getPackageAliases($app)
     {
-        /** @var Juno $juno */
-        $juno = $this->app->get('juno');
-        /** @var BalanceConsultResponse $response */
-        $response = $juno->request(BalanceConsultRequest::class);
-        Console::log($response);
-        $this->assertFalse($response->failed());
+        return ['juno' => \Jetimob\Juno\Facades\Juno::class];
     }
 
-    public function testChargeConsult()
+    protected function assertResponse(Response $response)
     {
-        /** @var Juno $juno */
-        $juno = $this->app->get('juno');
-        $request = new ChargeConsultRequest('chr_D9BA1D5958742EE41B64A383E2E00CCE');
-
-        /** @var ChargeConsultResponse $response */
-        $response = $juno->request($request);
-        Console::log($response);
         $this->assertFalse($response->failed());
-    }
-
-    public function testChargeCancel()
-    {
-        /** @var Juno $juno */
-        $juno = $this->app->get('juno');
-        $request = new ChargeCancelRequest('chr_D9BA1D5958742EE41B64A383E2E00CCE');
-        /** @var ChargeCancelResponse $response */
-        $response = $juno->request($request);
-
         if ($response->failed()) {
-            Console::log($response);
+            $this->debugFailedResponse($response);
+        }
+    }
+
+    protected function debugFailedResponse(Response $response)
+    {
+        if (!($response instanceof ErrorResponse)) {
             return;
         }
 
-        if ($response->canceled()) {
-            Console::log('Successfully canceled!');
-        } else {
-            Console::log('FUCK ME');
+        /** @var ErrorDetail $detail */
+        foreach ($response->getDetails() as $detail) {
+            Console::log($detail->getMessage());
         }
-
-        $this->assertFalse($response->failed());
     }
-
-    public function testChargeCreation()
-    {
-        /** @var Juno $juno */
-        $juno = $this->app->get('juno');
-
-        $charge = new Charge();
-        $charge->amount = 14.0;
-        $charge->installments = 1;
-        $charge->fine = 5;
-        $charge->description = 'This is a description about the charge';
-        $charge->dueDate = '2020-01-24';
-
-        $billing = new Billing();
-        $billing->name = 'Alan Weingartner';
-        $billing->notify = false;
-        $billing->document = '01566139058';
-        $billing->email = 'alan.weingartner@gmail.com';
-
-        /** @var ChargeCreationResponse $response */
-        $response = $juno->request(new ChargeCreationRequest(
-            $charge,
-            $billing,
-        ));
-
-        $charges = $response->getCharges();
-        Console::log($response);
-
-        $this->assertFalse($response->failed());
-    }
+//
+//    public function testBalanceConsult()
+//    {
+//        /** @var Juno $juno */
+//        $juno = $this->app->get('juno');
+//        /** @var BalanceConsultResponse $response */
+//        $response = $juno->request(BalanceConsultRequest::class);
+//        Console::log($response);
+//        $this->assertFalse($response->failed());
+//    }
+//
+//    public function testChargeConsult()
+//    {
+//        /** @var Juno $juno */
+//        $juno = $this->app->get('juno');
+//        $request = new ChargeConsultRequest('chr_D9BA1D5958742EE41B64A383E2E00CCE');
+//
+//        /** @var ChargeConsultResponse $response */
+//        $response = $juno->request($request);
+//        Console::log($response);
+//        $this->assertFalse($response->failed());
+//    }
+//
+//    public function testChargeCancel()
+//    {
+//        /** @var Juno $juno */
+//        $juno = $this->app->get('juno');
+//        $request = new ChargeCancelRequest('chr_D9BA1D5958742EE41B64A383E2E00CCE');
+//        /** @var ChargeCancelResponse $response */
+//        $response = $juno->request($request);
+//
+//        if ($response->failed()) {
+//            Console::log($response);
+//            return;
+//        }
+//
+//        if ($response->canceled()) {
+//            Console::log('Successfully canceled!');
+//        } else {
+//            Console::log('FUCK ME');
+//        }
+//
+//        $this->assertFalse($response->failed());
+//    }
+//
+//    public function testChargeCreation()
+//    {
+//        /** @var Juno $juno */
+//        $juno = $this->app->get('juno');
+//
+//        $charge = new Charge();
+//        $charge->amount = 14.0;
+//        $charge->installments = 1;
+//        $charge->fine = 5;
+//        $charge->description = 'This is a description about the charge';
+//        $charge->dueDate = '2020-01-24';
+//
+//        $billing = new Billing();
+//        $billing->name = 'Alan Weingartner';
+//        $billing->notify = false;
+//        $billing->document = '01566139058';
+//        $billing->email = 'alan.weingartner@gmail.com';
+//
+//        /** @var ChargeCreationResponse $response */
+//        $response = $juno->request(new ChargeCreationRequest(
+//            $charge,
+//            $billing,
+//        ));
+//
+//        $charges = $response->getCharges();
+//        Console::log($response);
+//
+//        $this->assertFalse($response->failed());
+//    }
 }
