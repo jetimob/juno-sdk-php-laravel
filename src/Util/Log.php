@@ -13,9 +13,6 @@ class Log
     {
         $message = sprintf('[JUNO]: %s', $message);
         \Illuminate\Support\Facades\Log::{$level}($message, $context);
-
-        // TODO: REMOVE ME
-        Console::log(sprintf('[%s]: %s ..... %s', strtoupper($level), $message, json_encode($context)));
     }
 
     /**

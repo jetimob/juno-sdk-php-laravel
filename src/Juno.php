@@ -19,7 +19,6 @@ use Jetimob\Juno\Lib\Http\Authorization\AuthorizationResponse;
 use Jetimob\Juno\Lib\Http\ErrorResponse;
 use Jetimob\Juno\Lib\Http\Request;
 use Jetimob\Juno\Lib\Http\Response;
-use Jetimob\Juno\Util\Console;
 use Jetimob\Juno\Util\Log;
 
 /**
@@ -28,7 +27,8 @@ use Jetimob\Juno\Util\Log;
  */
 class Juno
 {
-    private const AUTHZ_CACHE_KEY = 'authorization';
+    /** @var string AUTHZ_CACHE_KEY is the key used to store an authorization token in cache */
+    private const AUTHZ_CACHE_KEY = 'juno:authorization:token';
     private const ACCESS_TOKEN_RETRIEVAL_MAX_ATTEMPTS = 5;
 
     private int $accessTokenCurrentAttempt = 0;
