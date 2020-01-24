@@ -31,7 +31,7 @@ abstract class Response
 
     protected function setTimestamp($timestamp): void
     {
-        if (!isset($this->timestamp)) {
+        if (isset($this->timestamp)) {
             return;
         }
 
@@ -60,7 +60,7 @@ abstract class Response
 
     public function setStatusCode(int $code): void
     {
-        if (!isset($this->statusCode)) {
+        if (isset($this->statusCode)) {
             return;
         }
 
