@@ -133,4 +133,17 @@ abstract class Request
         return sprintf('%s-%s-%s', $year, $month, $day);
     }
 
+    /**
+     * @param int|string $year
+     * @param int|string $month
+     * @param int|string $day
+     * @param int|string $hour
+     * @param int|string $minute
+     * @param int|string $second
+     * @return string
+     */
+    public function formatDateTime($year, $month, $day, $hour, $minute, $second): string
+    {
+        sprintf('%s %s:%s:%s', $this->formatDate($year, $month, $day), $hour, $minute, $second);
+    }
 }
