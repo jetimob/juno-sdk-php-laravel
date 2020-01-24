@@ -18,6 +18,11 @@ class AuthorizationResponse extends Response implements \Serializable
 
     protected string $jti;
 
+    // override father class properties so we can serialize them
+    protected int $timestamp;
+
+    protected int $statusCode;
+
     /**
      * @return string
      */
@@ -78,6 +83,8 @@ class AuthorizationResponse extends Response implements \Serializable
             $this->scope,
             $this->user_name,
             $this->jti,
+            $this->timestamp,
+            $this->statusCode,
         ]);
     }
 
@@ -93,6 +100,8 @@ class AuthorizationResponse extends Response implements \Serializable
             $this->scope,
             $this->user_name,
             $this->jti,
+            $this->timestamp,
+            $this->statusCode,
         ) = unserialize($serialized);
     }
 }
