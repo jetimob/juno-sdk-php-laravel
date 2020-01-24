@@ -132,7 +132,6 @@ class Juno
         $cached = Cache::get(self::AUTHZ_CACHE_KEY);
 
         if (!is_null($cached)) {
-            Console::log('got cached!');
             return $cached;
         }
 

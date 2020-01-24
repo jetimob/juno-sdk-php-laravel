@@ -2,8 +2,12 @@
 
 namespace Jetimob\Juno\Lib\Model;
 
+use Jetimob\Juno\Lib\Traits\Serializable;
+
 class Billing
 {
+    use Serializable;
+
     /** @var string|null $name */
     public ?string $name;
 

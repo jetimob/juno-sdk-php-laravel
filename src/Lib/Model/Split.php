@@ -2,8 +2,12 @@
 
 namespace Jetimob\Juno\Lib\Model;
 
+use Jetimob\Juno\Lib\Traits\Serializable;
+
 class Split
 {
+    use Serializable;
+
     /** @var string|null $recipientToken defines the recipient of the split */
     private ?string $recipientToken;
 
