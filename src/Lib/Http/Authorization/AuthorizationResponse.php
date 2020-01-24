@@ -3,8 +3,9 @@
 namespace Jetimob\Juno\Lib\Http\Authorization;
 
 use Jetimob\Juno\Lib\Http\Response;
+use Serializable;
 
-class AuthorizationResponse extends Response implements \Serializable
+class AuthorizationResponse extends Response implements Serializable
 {
     protected string $access_token;
 
@@ -17,11 +18,6 @@ class AuthorizationResponse extends Response implements \Serializable
     protected string $user_name;
 
     protected string $jti;
-
-    // override father class properties so we can serialize them
-    protected int $timestamp;
-
-    protected int $statusCode;
 
     /**
      * @return string
@@ -83,8 +79,8 @@ class AuthorizationResponse extends Response implements \Serializable
             $this->scope,
             $this->user_name,
             $this->jti,
-            $this->timestamp,
-            $this->statusCode,
+            $this->getTimestamp(),
+            $this->getStatusCode(),
         ]);
     }
 
@@ -100,8 +96,11 @@ class AuthorizationResponse extends Response implements \Serializable
             $this->scope,
             $this->user_name,
             $this->jti,
-            $this->timestamp,
-            $this->statusCode,
+            $timestamp,
+            $statusCode,
         ) = unserialize($serialized);
+
+        $this->setTimestamp($timestamp);
+        $this->setStatusCode($statusCode);
     }
 }

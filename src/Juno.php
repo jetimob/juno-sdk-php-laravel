@@ -136,7 +136,7 @@ class Juno
         }
 
         /** @var AuthorizationResponse $response */
-        $response = $this->request(new AuthorizationRequest(), $this->authzClient);
+        $response = $this->request(AuthorizationRequest::class, $this->authzClient);
 
         if ($response->failed()) {
             return $response;

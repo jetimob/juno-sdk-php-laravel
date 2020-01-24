@@ -29,6 +29,15 @@ abstract class Response
         return $this->timestamp;
     }
 
+    protected function setTimestamp($timestamp): void
+    {
+        if (!isset($this->timestamp)) {
+            return;
+        }
+
+        $this->timestamp = $timestamp;
+    }
+
     /**
      * True if this response failed, false otherwise.
      *
@@ -51,7 +60,7 @@ abstract class Response
 
     public function setStatusCode(int $code): void
     {
-        if (!empty($this->statusCode)) {
+        if (!isset($this->statusCode)) {
             return;
         }
 
