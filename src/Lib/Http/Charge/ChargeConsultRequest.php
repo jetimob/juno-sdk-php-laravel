@@ -11,6 +11,8 @@ class ChargeConsultRequest extends Request
 
     protected string $method = Method::GET;
 
+    protected array $bodySchema = ['id'];
+
     /**
      * ChargeConsultRequest constructor.
      * @param string $id

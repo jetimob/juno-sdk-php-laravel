@@ -43,10 +43,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function assertResponse(Response $response)
     {
+        Console::log($response);
+
         if ($response->failed()) {
             $this->debugFailedResponse($response);
-        } else {
-            Console::log($response);
         }
 
         $this->assertFalse($response->failed());

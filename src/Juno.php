@@ -5,6 +5,7 @@ namespace Jetimob\Juno;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Facades\Cache;
 use Jetimob\Juno\Exception\EmptyResponseClassException;
@@ -19,6 +20,7 @@ use Jetimob\Juno\Lib\Http\Authorization\AuthorizationResponse;
 use Jetimob\Juno\Lib\Http\ErrorResponse;
 use Jetimob\Juno\Lib\Http\Request;
 use Jetimob\Juno\Lib\Http\Response;
+use Jetimob\Juno\Util\Console;
 use Jetimob\Juno\Util\Log;
 
 /**
@@ -35,6 +37,8 @@ class Juno
 
     private array $config;
 
+    private array $gruzzleOptions;
+
     private AuthorizationResponse $authorization;
 
     private Client $apiClient;
@@ -50,7 +54,7 @@ class Juno
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $gruzzleOptions = array_key_exists('gruzzle', $config) ? $config['gruzzle'] : [];
+        $this->gruzzleOptions = array_key_exists('gruzzle', $config) ? $config['gruzzle'] : [];
 
         // check if we got all required keys in the config file
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
@@ -63,14 +67,7 @@ class Juno
             }
         }
 
-        $apiClientOptions = array_merge($gruzzleOptions, [
-            RequestOptions::HEADERS => [
-                'X-Api-Version' => $config['version'],
-                'X-Resource-Token' => $config['private_token'],
-            ],
-        ]);
-
-        $authzClientOptions = array_merge($gruzzleOptions, [
+        $authzClientOptions = array_merge($this->gruzzleOptions, [
             RequestOptions::HEADERS => [
                 'Authorization' => sprintf(
                     'Basic %s',
@@ -79,25 +76,7 @@ class Juno
             ],
         ]);
 
-        $env = $config['environment'] ?? null;
-
-        if (empty($env)) {
-            Log::error('environment was not set in Juno\'s configuration file');
-            return;
-        }
-
-        if ($env === 'development') {
-            $env = 'sandbox';
-        } elseif ($env !== 'sandbox' && $env !== 'production') {
-            Log::error('juno\'s environment can only be set to "development", "production" or "sandbox"');
-            return;
-        }
-
-        // overrides the base_uri accordingly to the environment
-        $apiClientOptions['base_uri'] = $gruzzleOptions['base_uri'][$env];
-        $this->apiClient = new Client($apiClientOptions);
-
-        $authzClientOptions['base_uri'] = $gruzzleOptions['authorization_base_uri'][$env];
+        $authzClientOptions['base_uri'] = $this->gruzzleOptions['authorization_base_uri'][$this->getEnv()];
         $this->authzClient = new Client($authzClientOptions);
     }
 
@@ -213,7 +192,7 @@ class Juno
             /** @var Response $instance */
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->setStatusCode($response->getStatusCode());
-        } catch (ClientException $e) {
+        } catch (ClientException | ServerException $e) {
             $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
         } catch (Exception $e) {
             throw new JunoCastException($e);
@@ -258,8 +237,87 @@ class Juno
         return $this->authorization->getAccessToken();
     }
 
+    /**
+     * Returns the string representation of the current environment, set it the configuration file.
+     * Can be 'production' or 'sandbox';
+     *
+     * @return string
+     */
+    private function getEnv(): string
+    {
+        $env = $this->config['environment'] ?? null;
+
+        if (empty($env)) {
+            Log::error('environment was not set in Juno\'s configuration file');
+            return 'sandbox';
+        }
+
+        if ($env === 'development') {
+            $env = 'sandbox';
+        } elseif ($env !== 'sandbox' && $env !== 'production') {
+            Log::error('juno\'s environment can only be set to "development", "production" or "sandbox"');
+            return 'sandbox';
+        }
+
+        return $env;
+    }
+
+    /**
+     * Initializes the API HTTP client with default and override options.
+     *
+     * @param array $overrideOptions
+     */
+    private function initApiClient(array $overrideOptions = []): void
+    {
+        $apiClientOptions = array_merge($this->gruzzleOptions, array_merge($this->makeApiHeaders(), $overrideOptions));
+        // overrides the base_uri accordingly to the environment
+        $apiClientOptions['base_uri'] = $this->gruzzleOptions['base_uri'][$this->getEnv()];
+        $this->apiClient = new Client($apiClientOptions);
+    }
+
+    /**
+     * Returns the necessary API headers to a request be considered valid.
+     *
+     * @param array $with - merges custom headers with the default ones.
+     * @return array
+     */
+    private function makeApiHeaders(array $with = []): array
+    {
+        return [
+            RequestOptions::HEADERS => array_merge([
+                'X-Api-Version' => $this->config['version'],
+                'X-Resource-Token' => $this->config['private_token'],
+            ], $with),
+        ];
+    }
+
+    /**
+     * Overrides the X-Resource-Token header so the next request will be identified by it.
+     *
+     * @param string $privateToken
+     * @return Juno
+     */
+    public function as(string $privateToken): Juno
+    {
+        $this->initApiClient($this->makeApiHeaders([
+            'X-Resource-Token' => $privateToken,
+        ]));
+
+        return $this;
+    }
+
+    /**
+     * Resets the X-Resource-Token header.
+     *
+     * @return Juno
+     */
+    public function resetResourceToken(): Juno
+    {
+        $this->initApiClient();
+        return $this;
+    }
+
     private const CONFIG_REQUIRED_KEYS = [
         'clientId', 'secret', 'version'
     ];
 }
-
