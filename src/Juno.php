@@ -20,7 +20,6 @@ use Jetimob\Juno\Lib\Http\Authorization\AuthorizationResponse;
 use Jetimob\Juno\Lib\Http\ErrorResponse;
 use Jetimob\Juno\Lib\Http\Request;
 use Jetimob\Juno\Lib\Http\Response;
-use Jetimob\Juno\Util\Console;
 use Jetimob\Juno\Util\Log;
 
 /**
@@ -58,7 +57,7 @@ class Juno
 
         // check if we got all required keys in the config file
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
-            if (!array_key_exists($key, $config)) {
+            if (!array_key_exists($key, $config) || empty($config[$key])) {
                 Log::info('config', $config);
                 throw new JunoException(sprintf(
                     'missing required keys in juno\'s configuration file [%s]',
