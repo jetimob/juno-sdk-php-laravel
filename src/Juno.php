@@ -77,6 +77,7 @@ class Juno
 
         $authzClientOptions['base_uri'] = $this->gruzzleOptions['authorization_base_uri'][$this->getEnv()];
         $this->authzClient = new Client($authzClientOptions);
+        $this->initApiClient();
     }
 
     /**

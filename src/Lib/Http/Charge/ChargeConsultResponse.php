@@ -26,7 +26,7 @@ class ChargeConsultResponse extends Response
 
     public int $amount;
 
-    public BilletDetails $billetDetails;
+    public ?BilletDetails $billetDetails;
 
     /** @var Payment[] $payments */
     public array $payments;
@@ -35,10 +35,14 @@ class ChargeConsultResponse extends Response
     {
         if (!empty($this->data->billetDetails)) {
             $this->billetDetails = BilletDetails::deserialize($this->data->billetDetails);
+        } else {
+            $this->billetDetails = null;
         }
 
         if (!empty($this->data->payments)) {
             $this->payments = Payment::deserializeArray($this->data->payments);
+        } else {
+            $this->payments = [];
         }
     }
 }

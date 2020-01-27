@@ -21,10 +21,14 @@ class TransferenceResponse extends Response
 
     public string $status;
 
-    public Recipient $recipient;
+    public ?Recipient $recipient;
 
     public function initComplexObjects()
     {
-        $this->recipient = Recipient::deserialize($this->data->recipient);
+        if (!empty($this->data->recipient)) {
+            $this->recipient = Recipient::deserialize($this->data->recipient);
+        } else {
+            $this->recipient = null;
+        }
     }
 }

@@ -33,8 +33,12 @@ class ChargeCreationResponse extends Response
 
     public function initComplexObjects()
     {
-        $charges = $this->data->_embedded->charges;
-        $this->charges = ChargeResource::deserializeArray($charges);
+        if (!empty($this->data->_embedded) && !empty($this->data->_embedded->charges)) {
+            $charges = $this->data->_embedded->charges;
+            $this->charges = ChargeResource::deserializeArray($charges);
+        } else {
+            $this->charges = [];
+        }
     }
 
     /**

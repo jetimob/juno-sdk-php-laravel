@@ -12,6 +12,10 @@ class ExtraBusinessAreasResponse extends Response
 
     public function initComplexObjects()
     {
-        $this->businessAreas = BusinessAreaResource::deserializeArray($this->data->_embedded->businessAreas);
+        if (!empty($this->data->_embedded) && !empty($this->data->_embedded->businessAreas)) {
+            $this->businessAreas = BusinessAreaResource::deserializeArray($this->data->_embedded->businessAreas);
+        } else {
+            $this->businessAreas = [];
+        }
     }
 }
