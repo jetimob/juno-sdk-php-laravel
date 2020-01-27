@@ -38,6 +38,7 @@ class ChargeCreationRequest extends Request
      */
     public function __construct(Charge $charge, Billing $billing)
     {
+        parent::__construct();
         $this->charge = $charge;
         $this->billing = $billing;
     }
