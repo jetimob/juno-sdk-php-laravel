@@ -11,4 +11,6 @@ abstract class Method
     public const PUT = 'PUT';
 
     public const DELETE = 'DELETE';
+
+    public const PATCH = 'PATCH';
 }

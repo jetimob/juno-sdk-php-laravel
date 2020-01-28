@@ -9,10 +9,24 @@ abstract class Request
 {
     protected string $responseClass;
 
+    /**
+     * Defines all class properties that should be sent with the request.
+     * The access level of the property must be protected or public.
+     * @var array $bodySchema
+     */
     protected array $bodySchema = [];
 
+    /**
+     * If marked as true, the request will send $bodySchema as json encoded, otherwise x-www-form-urlencoded will be
+     * used.
+     * @var bool $jsonBody
+     */
     protected bool $jsonBody = true;
 
+    /**
+     * UNIX timestamp of the moment of the request.
+     * @var int $timestamp
+     */
     private int $timestamp;
 
     public function __construct()
@@ -130,7 +144,7 @@ abstract class Request
      */
     public function formatDate($year, $month, $day): string
     {
-        return sprintf('%s-%s-%s', $year, $month, $day);
+        return sprintf('%s-%02s-%02s', $year, $month, $day);
     }
 
     /**
@@ -144,6 +158,12 @@ abstract class Request
      */
     public function formatDateTime($year, $month, $day, $hour, $minute, $second): string
     {
-        sprintf('%s %s:%s:%s', $this->formatDate($year, $month, $day), $hour, $minute, $second);
+        sprintf(
+            '%s %02s:%02s:%02s',
+            $this->formatDate($year, $month, $day),
+            $hour,
+            $minute,
+            $second,
+        );
     }
 }
