@@ -78,6 +78,8 @@ class Juno
         $authzClientOptions['base_uri'] = $this->gruzzleOptions['authorization_base_uri'][$this->getEnv()];
         $this->authzClient = new Client($authzClientOptions);
         $this->initApiClient();
+
+        Log::$enabled = $config['logging'];
     }
 
     /**
@@ -315,6 +317,38 @@ class Juno
     {
         $this->initApiClient();
         return $this;
+    }
+
+
+    /**
+     * @param int|string $year
+     * @param int|string $month
+     * @param int|string $day
+     * @return string
+     */
+    public static function formatDate($year, $month, $day): string
+    {
+        return sprintf('%s-%02s-%02s', $year, $month, $day);
+    }
+
+    /**
+     * @param int|string $year
+     * @param int|string $month
+     * @param int|string $day
+     * @param int|string $hour
+     * @param int|string $minute
+     * @param int|string $second
+     * @return string
+     */
+    public static function formatDateTime($year, $month, $day, $hour = 0, $minute = 0, $second = 0): string
+    {
+        return sprintf(
+            '%s %02s:%02s:%02s',
+            self::formatDate($year, $month, $day),
+            $hour,
+            $minute,
+            $second,
+        );
     }
 
     private const CONFIG_REQUIRED_KEYS = [

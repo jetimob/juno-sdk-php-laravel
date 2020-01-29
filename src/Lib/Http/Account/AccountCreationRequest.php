@@ -3,7 +3,6 @@
 namespace Jetimob\Juno\Lib\Http\Account;
 
 use Jetimob\Juno\Lib\Http\Method;
-use Jetimob\Juno\Lib\Http\Request;
 use Jetimob\Juno\Lib\Model\Address;
 use Jetimob\Juno\Lib\Model\BankAccount;
 use Jetimob\Juno\Lib\Model\LegalRepresentative;
@@ -13,20 +12,20 @@ use Jetimob\Juno\Lib\Model\LegalRepresentative;
  * @package Jetimob\Juno\Lib\Http\Account
  * @see https://dev.juno.com.br/api/v2#operation/createDigitalAccount
  */
-class AccountCreationRequest extends Request
+class AccountCreationRequest extends AccountRequest
 {
     /**
      * @var string PAYMENT_ACCOUNT_TYPE
      * - A fully functional payment digital account
      * - All features available
      */
-    private const PAYMENT_ACCOUNT_TYPE = 'PAYMENT';
+    public const PAYMENT_ACCOUNT_TYPE = 'PAYMENT';
     /**
      * @var string RECEIVING_ACCOUNT_TYPE
      * - A specific digital account only used for receiving
      * - Just receiving features available
      */
-    private const RECEIVING_ACCOUNT_TYPE = 'RECEIVING';
+    public const RECEIVING_ACCOUNT_TYPE = 'RECEIVING';
 
     /** @var string $companyType MANDATORY FOR COMPANIES */
     public string $companyType;
@@ -70,7 +69,7 @@ class AccountCreationRequest extends Request
     // the bool default values are specified in Juno's documentation
     // all bool options defined below are marked as ADVANCED and should require additional permissions
 
-    public bool $emailOptOut = false;
+    public bool $emailOptOut = true;
 
     public bool $autoApprove = false;
 
@@ -90,15 +89,16 @@ class AccountCreationRequest extends Request
         'bankAccount',
         'legalRepresentative',
         'type',
+        'emailOptOut',
     ];
 
     public function getBodySchema(): array
     {
         if ($this->type === self::PAYMENT_ACCOUNT_TYPE) {
-            return array_merge($this->bodySchema, ['linesOfBusiness']);
+            return [...$this->bodySchema, 'linesOfBusiness'];
         }
 
-        return array_merge($this->bodySchema, ['businessUrl']);
+        return [...$this->bodySchema, 'businessUrl'];
     }
 
     /**
@@ -107,13 +107,5 @@ class AccountCreationRequest extends Request
     protected function method(): string
     {
         return Method::POST;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function urn(): string
-    {
-        return 'digital-accounts';
     }
 }

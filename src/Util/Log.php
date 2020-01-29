@@ -4,6 +4,8 @@ namespace Jetimob\Juno\Util;
 
 class Log
 {
+    public static bool $enabled = true;
+
     /**
      * @param string $message
      * @param array $context
@@ -11,7 +13,11 @@ class Log
      */
     private static function fmt(string $message, array $context, string $level): void
     {
-        $message = sprintf('[JUNO]: %s', $message);
+        if (!self::$enabled) {
+            return;
+        }
+
+        $message = sprintf('[JUNO|%s]: %s', substr(strtoupper($level), 0, 3), $message);
         \Illuminate\Support\Facades\Log::{$level}($message, $context);
     }
 
