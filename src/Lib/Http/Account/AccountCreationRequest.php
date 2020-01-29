@@ -69,11 +69,14 @@ class AccountCreationRequest extends AccountRequest
     // the bool default values are specified in Juno's documentation
     // all bool options defined below are marked as ADVANCED and should require additional permissions
 
-    public bool $emailOptOut = true;
+    // any value different than false will send the param with the request. Use it ONLY if your is authorized to do so.
 
-    public bool $autoApprove = false;
+    /** @var bool $emailOptOut enables transparent checkout */
+    public bool $emailOptOut;
 
-    public bool $autoTransfer = false;
+    public bool $autoApprove;
+
+    public bool $autoTransfer;
 
     /** @var array $bodySchema defines the body schema common for both types of account */
     protected array $bodySchema = [
@@ -89,11 +92,21 @@ class AccountCreationRequest extends AccountRequest
         'bankAccount',
         'legalRepresentative',
         'type',
-        'emailOptOut',
     ];
 
     public function getBodySchema(): array
     {
+        $schema = [...$this->bodySchema];
+        $setIfModified = function ($advancedOpt) use (&$schema) {
+            if (isset($this->{$advancedOpt})) {
+                array_push($schema, $advancedOpt);
+            }
+        };
+
+        $setIfModified('emailOptOut');
+        $setIfModified('autoApprove');
+        $setIfModified('autoTransfer');
+
         if ($this->type === self::PAYMENT_ACCOUNT_TYPE) {
             return [...$this->bodySchema, 'linesOfBusiness'];
         }
