@@ -16,12 +16,7 @@ abstract class Request
      */
     protected array $bodySchema = [];
 
-    /**
-     * If marked as true, the request will send $bodySchema as json encoded, otherwise x-www-form-urlencoded will be
-     * used.
-     * @var bool $jsonBody
-     */
-    protected bool $jsonBody = true;
+    protected string $bodyType = BodyType::JSON;
 
     /**
      * UNIX timestamp of the moment of the request.
@@ -54,7 +49,7 @@ abstract class Request
      */
     abstract protected function urn(): string;
 
-    public function getMethod(): string
+    final public function getMethod(): string
     {
         return $this->method();
     }
@@ -62,7 +57,7 @@ abstract class Request
     /**
      * @return string
      */
-    public function getUrn(): string
+    final public function getUrn(): string
     {
         $matches = [];
         $urn = $this->urn();
@@ -80,7 +75,7 @@ abstract class Request
     /**
      * @return string
      */
-    public function getResponseClass(): string
+    final public function getResponseClass(): string
     {
         return $this->responseClass;
     }
@@ -88,23 +83,23 @@ abstract class Request
     /**
      * @return array
      */
-    public function getBodySchema(): array
+    final public function getBodySchema(): array
     {
         return $this->bodySchema;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isJsonBody(): bool
+    final public function getBodyType(): string
     {
-        return $this->jsonBody;
+        return $this->bodyType;
     }
 
     /**
      * @return int
      */
-    public function getTimestamp(): int
+    final public function getTimestamp(): int
     {
         return $this->timestamp;
     }
@@ -115,13 +110,15 @@ abstract class Request
      */
     public function build(): array
     {
-        if (count($this->getBodySchema()) === 0) {
+        $schema = $this->getBodySchema();
+
+        if (count($schema) === 0) {
             return [];
         }
 
         $data = [];
 
-        foreach ($this->getBodySchema() as $property) {
+        foreach ($schema as $property) {
             if (!property_exists($this, $property)) {
                 throw new MissingPropertyBodySchemaException($property, $this);
             }

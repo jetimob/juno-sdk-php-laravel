@@ -24,12 +24,12 @@ abstract class Response
      *
      * @return int
      */
-    public function getTimestamp(): int
+    final public function getTimestamp(): int
     {
         return $this->timestamp;
     }
 
-    protected function setTimestamp($timestamp): void
+    final protected function setTimestamp($timestamp): void
     {
         if (isset($this->timestamp)) {
             return;
@@ -43,7 +43,7 @@ abstract class Response
      *
      * @return bool
      */
-    public function failed()
+    final public function failed()
     {
         return $this instanceof ErrorResponse;
     }
@@ -53,18 +53,91 @@ abstract class Response
      *
      * @return int
      */
-    public function getStatusCode(): int
+    final public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    public function setStatusCode(int $code): void
+    /**
+     * Overrides the response status code. Used for deserialization from cached data.
+     *
+     * @param int $code
+     */
+    final public function setStatusCode(int $code): void
     {
         if (isset($this->statusCode)) {
             return;
         }
 
         $this->statusCode = $code;
+    }
+
+    /**
+     * Returns true if there is an embedded object with the given key, false otherwise.
+     *
+     * @param string $key the object key to look for
+     * @return bool true if there is an embedded object with the given key, false otherwise.
+     */
+    final public function hasEmbeddedData(string $key): bool
+    {
+        return !empty($this->data->_embedded) && !empty($this->data->_embedded->{$key});
+    }
+
+    /**
+     * Returns an object if the response object has embedded data and $key is present, null otherwise.
+     *
+     * @param string $key the object key to look for
+     * @return array|object|null an object if the response object has embedded data and $key is present, null otherwise.
+     */
+    final public function getEmbeddedData(string $key)
+    {
+        return $this->hasEmbeddedData($key) ? $this->data->_embedded->{$key} : null;
+    }
+
+    /**
+     * @param string $key the object key to look for
+     * @param string $class the serializable class (MUST use Serializable trait)
+     * @param mixed $default default value to return when the key is not present
+     * @param string $func the class function responsible to deserialize the object
+     * @return mixed
+     */
+    private function deserializeEmbedded(string $key, string $class, $default, string $func)
+    {
+        $data = $this->getEmbeddedData($key);
+
+        if (is_null($data)) {
+            return $default;
+        }
+
+        return method_exists($class, $func) ? $class::{$func}($data) : $default;
+    }
+
+    /**
+     * Will try to find $key in the response's embedded data and if there is something, will deserialize with the given
+     * class name. Will return $default if there is no object or embedded data.
+     *
+     * @param string $key the object key to look for
+     * @param string $class the serializable class (MUST use Serializable trait)
+     * @param null $default default value to return when the key is not present
+     * @return mixed
+     */
+    final public function deserializeEmbeddedData(string $key, string $class, $default = null)
+    {
+        return $this->deserializeEmbedded($key, $class, $default, 'deserialize');
+    }
+
+    /**
+     * Will try to find $key in the response's embedded data and if there is something, will deserialize with the given
+     * class name. Will return $default if there is no object or embedded data.
+     *
+     * @param string $key the object key to look for
+     * @param string $class the serializable class (MUST use Serializable trait)
+     * @param array $default default value to return when the key is not present
+     * @return mixed
+     */
+    final public function deserializeEmbeddedArray(string $key, string $class, $default = [])
+    {
+        return $this->deserializeEmbedded($key, $class, $default, 'deserializeArray');
     }
 
     /**

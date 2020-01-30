@@ -12,10 +12,6 @@ class ExtraBanksInfoResponse extends Response
 
     public function initComplexObjects()
     {
-        if (!empty($this->data->_embedded) && !empty($this->data->_embedded->banks)) {
-            $this->banks = BankResource::deserializeArray($this->data->_embedded->banks);
-        } else {
-            $this->banks = [];
-        }
+        $this->banks = $this->deserializeEmbeddedArray('banks', BankResource::class);
     }
 }

@@ -167,10 +167,12 @@ class Juno
         }
 
         $instance = null;
-        $requestBodyType = $request->isJsonBody() ? 'json' : 'form_params';
-        $requestOptions = [
-            $requestBodyType => $request->build(),
-        ];
+        $builtBody = $request->build();
+        $requestOptions = [];
+
+        if (count($builtBody) > 0) {
+            $requestOptions[$request->getBodyType()] = $builtBody;
+        }
 
         // ALL requests (excluding AuthorizationRequest) MUST include the access token bearer authorization
         if (!($request instanceof AuthorizationRequest)) {
