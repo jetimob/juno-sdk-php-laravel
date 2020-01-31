@@ -32,6 +32,9 @@ class Juno
     private const AUTHZ_CACHE_KEY = 'juno:authorization:token';
     private const ACCESS_TOKEN_RETRIEVAL_MAX_ATTEMPTS = 5;
 
+    /** @var mixed|string $resourceToken identifies the main account resource token */
+    private string $resourceToken;
+
     private int $accessTokenCurrentAttempt = 0;
 
     private array $config;
@@ -80,6 +83,7 @@ class Juno
         $this->initApiClient();
 
         Log::$enabled = $config['logging'];
+        $this->resourceToken = $config['private_token'];
     }
 
     /**
@@ -117,7 +121,7 @@ class Juno
         }
 
         /** @var AuthorizationResponse $response */
-        $response = $this->request(AuthorizationRequest::class, $this->authzClient);
+        $response = $this->request(AuthorizationRequest::class, $this->resourceToken, $this->authzClient);
 
         if ($response->failed()) {
             return $response;
@@ -143,6 +147,7 @@ class Juno
      * </code>
      *
      * @param Request|string $request
+     * @param string $resourceToken
      * @param Client|null $client
      * @return ErrorResponse|Response|null
      * @throws JunoAccessTokenRejection
@@ -151,8 +156,10 @@ class Juno
      * @throws WrongRequestTypeException
      * @throws WrongResponseTypeException
      */
-    public function request($request, Client $client = null)
+    public function request($request, string $resourceToken, Client $client = null)
     {
+        $this->as($resourceToken);
+
         // accept strings so that we can use ::class notation
         if (is_string($request)) {
             $request = new $request();
@@ -301,7 +308,7 @@ class Juno
      * @param string $privateToken
      * @return Juno
      */
-    public function as(string $privateToken): Juno
+    private function as(string $privateToken): Juno
     {
         $this->initApiClient($this->makeApiHeaders([
             'X-Resource-Token' => $privateToken,
@@ -309,18 +316,6 @@ class Juno
 
         return $this;
     }
-
-    /**
-     * Resets the X-Resource-Token header.
-     *
-     * @return Juno
-     */
-    public function resetResourceToken(): Juno
-    {
-        $this->initApiClient();
-        return $this;
-    }
-
 
     /**
      * @param int|string $year
