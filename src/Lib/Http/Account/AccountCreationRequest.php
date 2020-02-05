@@ -92,6 +92,9 @@ class AccountCreationRequest extends AccountRequest
         'bankAccount',
         'legalRepresentative',
         'type',
+        'emailOptOut',
+        'autoApprove',
+        'autoTransfer',
     ];
 
     public function getBodySchema(): array
