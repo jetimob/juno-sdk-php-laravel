@@ -83,7 +83,7 @@ abstract class Request
     /**
      * @return array
      */
-    final public function getBodySchema(): array
+    public function getBodySchema(): array
     {
         return $this->bodySchema;
     }
