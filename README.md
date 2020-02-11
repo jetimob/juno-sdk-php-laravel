@@ -9,7 +9,7 @@ Make sure to add **`JUNO_PRIVATE_TOKEN`**, **`JUNO_CLIENT_ID`** and **`JUNO_CLIE
 Using Composer:
 
 ```sh
-$ composer require alanwgt/juno-sdk-php-laravel
+$ composer require jetimob/juno-sdk-php-laravel
 ```
 
 ### Publishing configurations
@@ -38,6 +38,10 @@ $ php artisan juno:install
 - `version`: Juno's API version
 - `environment`: sets the current environment to build the request's URL. ***production*** | ***sandbox***
 - `logging`: enables the logging to Laravel's Log facade
+- `request_max_attempts`: Juno's API is currently unstable and being so, is common that we need to perform a request more than one time
+until the request succeeds. Choose a value that you think that is acceptable. If the request fails even after the
+  N times set, an exception will be thrown
+- `request_attempt_delay`: Time in *ms* to wait before trying to execute a new request attempt
 
 ## Usage
 
@@ -133,19 +137,19 @@ class DocsCustomRequest extends Request
     public string $param1;
     public string $param2;
 
-    /** 
+    /**
      * @var string $responseClass overrides the response serialization class.
-     * 
+     *
      * Every successful request will have its response cast to an instance of the class defined by
      * this property.
-     * 
+     *
      * If the response class has the same name with 'Request' exchanged with 'Response', you can leave
      * don't need to set this property.
      */
     protected string $responseClass = DocsCustomResponse::class;
 
     /**
-     * @var string $bodyType overrides the request body type 
+     * @var string $bodyType overrides the request body type
      * @see http://docs.guzzlephp.org/en/stable/request-options.html
      */
     protected string $bodyType = BodyType::JSON;
@@ -195,15 +199,15 @@ class OddResponseObject
 ```php
 use Jetimob\Juno\Lib\Http\Response;
 
-/** 
+/**
  * All properties defined in this class MUST match the object keys defined in Juno's API response.
- * 
+ *
  * Complex objects can be typed so that the SDK can cast an instance and define this instance property
  * ($param in the class example below)
- * 
+ *
  * If there is data inside an '_embedded' key, you MUST override the initComplexObjects function and
  * use the helper functions of Response class.
- * 
+ *
  * @see https://dev.juno.com.br/api/v2
 */
 class DocsCustomResponse extends Response
@@ -219,7 +223,7 @@ class DocsCustomResponse extends Response
 
     /**
      * This function is mainly used to deserialize embedded data.
-     * 
+     *
      * The first parameter given to deserializeEmbeddedArray specifies in which key, inside the
      * _embedded object, is the data that we are trying to deserialize.
     */

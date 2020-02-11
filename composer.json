@@ -1,6 +1,6 @@
 {
-    "name": "alanwgt/juno-sdk-php-laravel",
-    "homepage": "https://github.com/alanwgt/juno-sdk-php-laravel",
+    "name": "jetimob/juno-sdk-php-laravel",
+    "homepage": "https://github.com/jetimob/juno-sdk-php-laravel",
     "description": "Juno integration developed to Jetimob's internal use.",
     "type": "library",
     "license": "MIT",
