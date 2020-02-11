@@ -30,12 +30,15 @@ class Juno
 {
     /** @var string AUTHZ_CACHE_KEY is the key used to store an authorization token in cache */
     public const AUTHZ_CACHE_KEY = 'juno:authorization:token';
-    private const ACCESS_TOKEN_RETRIEVAL_MAX_ATTEMPTS = 5;
 
     /** @var mixed|string $resourceToken identifies the main account resource token */
     private string $resourceToken;
 
-    private int $accessTokenCurrentAttempt = 0;
+    private int $currentRequestAttempt = 0;
+
+    private int $requestAttemptDelay;
+
+    private int $requestMaxAttempts;
 
     private array $config;
 
@@ -57,6 +60,8 @@ class Juno
     {
         $this->config = $config;
         $this->gruzzleOptions = array_key_exists('gruzzle', $config) ? $config['gruzzle'] : [];
+        $this->requestMaxAttempts = $config['request_max_attempts'];
+        $this->requestAttemptDelay = $config['request_attempt_delay'];
 
         // check if we got all required keys in the config file
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
@@ -91,7 +96,7 @@ class Juno
      *
      * @return bool
      */
-    private function checkAccessTokenValidity(): bool
+    private function isAccessTokenValid(): bool
     {
         if (is_null($this->authorization) || $this->authorization->failed()) {
             return false;
@@ -204,11 +209,18 @@ class Juno
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException | ServerException $e) {
-            $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+            if ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
+                $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+            } else {
+                usleep($this->requestAttemptDelay * 1000);
+                return $this->request(...func_get_args());
+            }
         } catch (Exception $e) {
+            $this->currentRequestAttempt = 0;
             throw new JunoCastException($e);
         }
 
+        $this->currentRequestAttempt = 0;
         $instance->initComplexObjects();
         return $instance;
     }
@@ -235,16 +247,13 @@ class Juno
 
         $this->authorization = $token;
 
-        if (!$this->checkAccessTokenValidity()) {
-            if ($this->accessTokenCurrentAttempt++ === self::ACCESS_TOKEN_RETRIEVAL_MAX_ATTEMPTS) {
-                throw new JunoAccessTokenRejection();
-            }
+        // we probably got an expired cached token
+        if (!$this->isAccessTokenValid()) {
             // empty the cache so that the next call to retrieveAccessToken will make a request to a new access token
             Cache::forget(self::AUTHZ_CACHE_KEY);
             return $this->getAccessToken();
         }
 
-        $this->accessTokenCurrentAttempt = 0;
         return $this->authorization->getAccessToken();
     }
 

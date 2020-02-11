@@ -14,15 +14,15 @@ class Console
             $msg = 'NULL';
         }
 
-        $encode = fn ($m) => json_encode($msg, JSON_PRETTY_PRINT);
+        $encode = fn () => json_encode($msg, JSON_PRETTY_PRINT);
 
         if (is_array($msg)) {
-            $msg = $encode($msg);
+            $msg = $encode();
         } elseif (is_object($msg)) {
             if (method_exists($msg, '__toString')) {
                 $msg = $msg->__toString();
             } else {
-                $msg = $encode($msg);
+                $msg = $encode();
             }
         }
 

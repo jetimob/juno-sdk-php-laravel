@@ -12,18 +12,28 @@ abstract class Request
     /**
      * Defines all class properties that should be sent with the request.
      * The access level of the property must be protected or public.
+     *
      * @var array $bodySchema
      */
     protected array $bodySchema = [];
 
+    /**
+     * Defines the body type sent with the request.
+     *
+     * @var string
+     */
     protected string $bodyType = BodyType::JSON;
 
     /**
      * UNIX timestamp of the moment of the request.
+     *
      * @var int $timestamp
      */
     private int $timestamp;
 
+    /**
+     * Request constructor.
+     */
     public function __construct()
     {
         $this->timestamp = time();
@@ -49,12 +59,19 @@ abstract class Request
      */
     abstract protected function urn(): string;
 
+    /**
+     * Returns the request HTTP method.
+     *
+     * @return string
+     */
     final public function getMethod(): string
     {
         return $this->method();
     }
 
     /**
+     * Returns the endpoint that this request is hitting on Juno's API server.
+     *
      * @return string
      */
     final public function getUrn(): string

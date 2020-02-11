@@ -20,7 +20,7 @@ abstract class Response
     }
 
     /**
-     * Returns the timestamp that the response was constructed.
+     * Returns the timestamp that the response was constructed with.
      *
      * @return int
      */
@@ -29,6 +29,11 @@ abstract class Response
         return $this->timestamp;
     }
 
+    /**
+     * Overrides the response timestamp. This is needed to deserialize Juno's cached authorization response.
+     *
+     * @param $timestamp
+     */
     final protected function setTimestamp($timestamp): void
     {
         if (isset($this->timestamp)) {
