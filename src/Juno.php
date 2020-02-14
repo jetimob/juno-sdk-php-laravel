@@ -196,6 +196,7 @@ class Juno
         try {
             $response = $client->request($request->getMethod(), $request->getUrn(), $requestOptions);
             $className = $request->getResponseClass();
+            $failedAfterMaxAttempts = false;
 
             if (empty($className)) {
                 throw new EmptyResponseClassException(get_class($request));
@@ -210,7 +211,13 @@ class Juno
             $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException | ServerException $e) {
             if ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
+                Log::error('request failed after max attempts reached', [
+                    'attempts' => $this->requestMaxAttempts,
+                    'urn' => $request->getUrn(),
+                    'method' => $request->getMethod(),
+                ]);
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                $failedAfterMaxAttempts = true;
             } else {
                 usleep($this->requestAttemptDelay * 1000);
                 return $this->request(...func_get_args());
@@ -218,6 +225,14 @@ class Juno
         } catch (Exception $e) {
             $this->currentRequestAttempt = 0;
             throw new JunoCastException($e);
+        }
+
+        if ($this->currentRequestAttempt > 0 && !$failedAfterMaxAttempts) {
+            Log::warning('request succeeded after more than one attempt', [
+                'attempts' => $this->currentRequestAttempt,
+                'urn' => $request->getUrn(),
+                'method' => $request->getMethod(),
+            ]);
         }
 
         $this->currentRequestAttempt = 0;
