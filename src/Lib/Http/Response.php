@@ -48,9 +48,19 @@ abstract class Response
      *
      * @return bool
      */
-    final public function failed()
+    final public function failed(): bool
     {
         return $this instanceof ErrorResponse;
+    }
+
+    /**
+     * True if this response succeeded, false otherwise.
+     *
+     * @return bool
+     */
+    final public function succeeded(): bool
+    {
+        return !$this->failed();
     }
 
     /**

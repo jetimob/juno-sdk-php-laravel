@@ -193,10 +193,11 @@ class Juno
             ];
         }
 
+        $failedAfterMaxAttempts = false;
+
         try {
             $response = $client->request($request->getMethod(), $request->getUrn(), $requestOptions);
             $className = $request->getResponseClass();
-            $failedAfterMaxAttempts = false;
 
             if (empty($className)) {
                 throw new EmptyResponseClassException(get_class($request));
@@ -210,12 +211,17 @@ class Juno
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException | ServerException $e) {
-            if ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
-                Log::error('request failed after max attempts reached', [
-                    'attempts' => $this->requestMaxAttempts,
-                    'urn' => $request->getUrn(),
-                    'method' => $request->getMethod(),
-                ]);
+            $statusCode = $e->getCode();
+
+            if (!in_array($statusCode, $this->getConfig('recoverable_status_codes', []))) {
+                $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                $this->logRequestError(
+                    'request failed with an unrecoverable status code',
+                    $request,
+                    $statusCode,
+                );
+            } elseif ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
+                $this->logRequestError('request failed after max attempts reached', $request, $statusCode);
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
                 $failedAfterMaxAttempts = true;
             } else {
@@ -280,7 +286,7 @@ class Juno
      */
     private function getEnv(): string
     {
-        $env = $this->config['environment'] ?? null;
+        $env = $this->getConfig('environment');
 
         if (empty($env)) {
             Log::error('environment was not set in Juno\'s configuration file');
@@ -320,8 +326,8 @@ class Juno
     {
         return [
             RequestOptions::HEADERS => array_merge([
-                'X-Api-Version' => $this->config['version'],
-                'X-Resource-Token' => $this->config['private_token'],
+                'X-Api-Version' => $this->getConfig('version', 2),
+                'X-Resource-Token' => $this->getConfig('private_token'),
             ], $with),
         ];
     }
@@ -342,6 +348,8 @@ class Juno
     }
 
     /**
+     * Returns a date formatted string (YYYY-MM-DD)
+     *
      * @param int|string $year
      * @param int|string $month
      * @param int|string $day
@@ -353,6 +361,8 @@ class Juno
     }
 
     /**
+     * Returns a datetime formatted string (YYYY-MM-DD HH:mm:ss)
+     *
      * @param int|string $year
      * @param int|string $month
      * @param int|string $day
@@ -370,6 +380,27 @@ class Juno
             $minute,
             $second,
         );
+    }
+
+    private function logRequestError(string $message, Request $request, $statusCode)
+    {
+        Log::error($message, [
+            'urn' => $request->getUrn(),
+            'method' => $request->getMethod(),
+            'status_code' => $statusCode,
+            'attemps' => $this->currentRequestAttempt,
+        ]);
+    }
+
+    /**
+     * Returns the configuration value from a given key. Default value is returned if the key is not found.
+     *
+     * @param string $key
+     * @param mixed|null $default
+     * @return mixed|null
+     */
+    public function getConfig(string $key, $default = null) {
+        return array_key_exists($key, $this->config) ? $this->config[$key] : $default;
     }
 
     private const CONFIG_REQUIRED_KEYS = [

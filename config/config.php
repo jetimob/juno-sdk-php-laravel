@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Response;
+
 return [
     'private_token' => env('JUNO_PRIVATE_TOKEN', ''),
 
@@ -43,5 +45,12 @@ return [
     'request_max_attempts' => 10,
 
     // Time in ms to wait before trying to execute a new request attempt.
-    'request_attempt_delay' => 500
+    'request_attempt_delay' => 500,
+
+    // Which HTTP status codes are considered recoverable. Only the ones specified in this array will trigger a
+    // reattempt in case of a failed request.
+    'recoverable_status_codes' => [
+//        Response::HTTP_INTERNAL_SERVER_ERROR,
+        Response::HTTP_UNAUTHORIZED,
+    ],
 ];

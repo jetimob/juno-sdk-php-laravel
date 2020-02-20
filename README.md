@@ -42,6 +42,7 @@ $ php artisan juno:install
 until the request succeeds. Choose a value that you think that is acceptable. If the request fails even after the
   N times set, an exception will be thrown
 - `request_attempt_delay`: Time in *ms* to wait before trying to execute a new request attempt
+- `recoverable_status_codes`: Array of status codes that are considered recoverable. Only the ones specified in this array will trigger a reattempt in case of a failed request.
 
 ## Usage
 
@@ -79,7 +80,7 @@ $billing->notify = true;
 $charge = new Charge();
 $charge->description    = 'description';
 $charge->amount         = 99999.99;
-$charge->dueDate        = 'YYYY-MM-DD';
+$charge->dueDate        = Juno::formatDate(2020, 2, 25);
 
 $charge->maxOverdueDays = 99;
 $charge->fine           = 9.9;
@@ -89,13 +90,13 @@ $charge->interest       = 9.9;
 $response = Juno::request(new ChargeCreationRequest($charge, $billing), $resourceToken);
 ```
 
-#### Response
+### Response
 
 Every request made with the API will return an instance of the `Response` object.\
 All objects that implement `Request` have they own `Response` object. i.e.: `ChargeConsultRequest` has its `ChargeConsultResponse`.\
 If an error occurs during the request (a non 200 code), the returned object will be an instance of `ErrorResponse`.
 
-#### Errors
+### Errors
 
 When a request is made, several problems can arise, so to prevent this from happening, wrap the `request` call with a `try`/`catch` block.\
 Every Juno exception is a child of `JunoException` so all exceptions that can arise during a request can be handled within a single `try` block.
@@ -112,9 +113,11 @@ try {
 }
 ```
 
-### Access Token caching
+## Access Token caching
 
 **The authorization token (access token) is cached to Laravel's default `Cache` facade, make sure to have it correctly configured.**
+
+> If you change the environment from `production` to `sandbox` or vice-versa, you ***MUST*** clear the cache with: **`php artisan juno:clear-cache`**. Otherwise, the cached access token will be used and you'll receive a 401 error.
 
 ## Creating a custom request
 
