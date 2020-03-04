@@ -8,7 +8,7 @@ use Jetimob\Juno\Lib\Model\BusinessAreaResource;
 class ExtraBusinessAreasResponse extends Response
 {
     /** @var BusinessAreaResource[] $businessAreas */
-    protected array $businessAreas;
+    public array $businessAreas;
 
     public function initComplexObjects()
     {

@@ -20,4 +20,6 @@ class BankAccount
     public string $accountComplementNumber;
 
     public string $accountType;
+
+    public ?AccountHolder $accountHolder = null;
 }
