@@ -58,7 +58,7 @@ class AccountCreationRequest extends AccountRequest
     /** @var LegalRepresentative $legalRepresentative MANDATORY FOR COMPANIES */
     public LegalRepresentative $legalRepresentative;
 
-    public string $type = 'RECEIVING';
+    public string $type = self::PAYMENT_ACCOUNT_TYPE;
 
     /** @var string $linesOfBusiness [0 .. 100 chars] free description */
     public string $linesOfBusiness;

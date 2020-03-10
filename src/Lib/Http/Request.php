@@ -140,13 +140,33 @@ abstract class Request
                 throw new MissingPropertyBodySchemaException($property, $this);
             }
 
-            if (!isset($this->{$property})) {
+            if (!isset($this->{$property}) || is_null($this->{$property})) {
                 continue;
             }
 
             $data[$property] = $this->{$property};
         }
 
-        return json_decode(json_encode($data), true);
+        $returnData = json_decode(json_encode($data), true);
+        return $this->sanitizeArray($returnData);
+    }
+
+    /**
+     * Clears null values from the given array
+     *
+     * @param array $data
+     * @return array
+     */
+    private function sanitizeArray(array &$data): array
+    {
+        foreach (array_keys($data) as $arrK) {
+            if (empty($data[$arrK])) {
+                unset($data[$arrK]);
+            } elseif (is_array($data[$arrK])) {
+                $data[$arrK] = $this->sanitizeArray($data[$arrK]);
+            }
+        }
+
+        return $data;
     }
 }
