@@ -110,14 +110,14 @@ class Juno
      * Handles the lifecycle of a Juno's access token.
      * Tries to get one from te cache, and if not found, a new one will be requested in Juno's authorization endpoint.
      *
-     * @return AuthorizationResponse
+     * @return Response
      * @throws JunoAccessTokenRejection
      * @throws JunoCastException
      * @throws MissingPropertyBodySchemaException
      * @throws WrongResponseTypeException
      * @throws WrongRequestTypeException
      */
-    private function retrieveAccessToken(): AuthorizationResponse
+    private function retrieveAccessToken(): Response
     {
         $cached = Cache::get(self::AUTHZ_CACHE_KEY);
 
@@ -266,6 +266,7 @@ class Juno
             throw new JunoAccessTokenRejection();
         }
 
+        /** @var AuthorizationResponse $token */
         $this->authorization = $token;
 
         // we probably got an expired cached token
