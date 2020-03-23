@@ -2,8 +2,6 @@
 
 namespace Jetimob\Juno\tests\Feature;
 
-use Jetimob\Juno\Exception\JunoAccessTokenRejection;
-use Jetimob\Juno\Exception\JunoException;
 use Jetimob\Juno\Facades\Juno;
 use Jetimob\Juno\Lib\Http\Charge\ChargeConsultRequest;
 use Jetimob\Juno\Lib\Http\Charge\ChargeCreationRequest;
@@ -18,18 +16,18 @@ class ChargeTestCase extends TestCase
     public function testCreation()
     {
         $billing = new Billing();
-        $billing->name = 'Nome do cabra';
-        $billing->document = '01566139058';
-        $billing->birthDate = '1994-04-07 07:00';
+        $billing->name = '';
+        $billing->document = '';
+        $billing->birthDate = Juno::formatDateTime(1990, 4, 7);
 
-        $billing->email = 'alan.weingartner@gmail.com';
+        $billing->email = '';
         $billing->notify = false;
-        $billing->phone = '54999006794';
+        $billing->phone = '';
 
         $charge = new Charge();
-        $charge->description    = 'Referente ao mês de [...]';
+        $charge->description    = '';
         $charge->amount         = 10000.00;
-        $charge->dueDate        = Juno::formatDate(2020, 5, 2);
+        $charge->dueDate        = Juno::formatDate(2050, 5, 4);
 
         $charge->maxOverdueDays = 29;
         $charge->fine           = 0.0;
@@ -47,7 +45,7 @@ class ChargeTestCase extends TestCase
     public function testConsult()
     {
         try {
-            $response = Juno::request(new ChargeConsultRequest(''));
+            $response = Juno::request(new ChargeConsultRequest(''), '');
             $this->assertResponse($response);
         } catch (\Exception $e) {
             Console::log($e);

@@ -263,7 +263,7 @@ class Juno
         $token = $this->retrieveAccessToken();
 
         if ($token->failed()) {
-            throw new JunoAccessTokenRejection();
+            throw new JunoAccessTokenRejection($token);
         }
 
         /** @var AuthorizationResponse $token */

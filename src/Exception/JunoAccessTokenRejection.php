@@ -2,11 +2,23 @@
 
 namespace Jetimob\Juno\Exception;
 
+use Jetimob\Juno\Lib\Http\ErrorResponse;
+use Jetimob\Juno\Lib\Model\ErrorDetail;
+
 class JunoAccessTokenRejection extends JunoException
 {
-    public function __construct($message = "", $code = 0, $previous = null)
+    public function __construct(ErrorResponse $response)
     {
-        parent::__construct($message, $code, $previous);
+        $details = array_reduce($response->getDetails(), function ($carry, ErrorDetail $detail) {
+            return sprintf('%s; [%s]: %s', $carry, $detail->getErrorCode(), $detail->getMessage());
+        }, '');
+
+        parent::__construct(sprintf(
+            '[%s]: %s; %s',
+            $response->getStatus(),
+            $response->getError(),
+            $details
+        ), 0, null);
     }
 
 }

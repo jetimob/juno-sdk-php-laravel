@@ -30,12 +30,12 @@ class Charge
     /** @var int|null $maxOverdueDays number of days allowed for payment after expiration */
     public ?int $maxOverdueDays;
 
-    /** @var int|null $fine monthly interest. The amount entered is divided by the number of days to charge daily
+    /** @var float|null $fine monthly interest. The amount entered is divided by the number of days to charge daily
      * interest */
-    public ?int $fine;
+    public ?float $fine;
 
-    /** @var int|null $interest fine */
-    public ?int $interest;
+    /** @var float|null $interest fine */
+    public ?float $interest;
 
     /** @var int|null discount amount >= 0 */
     public ?int $discountAmount;
