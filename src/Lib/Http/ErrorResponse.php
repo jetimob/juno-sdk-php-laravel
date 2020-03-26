@@ -6,9 +6,6 @@ use Jetimob\Juno\Lib\Model\ErrorDetail;
 
 class ErrorResponse extends Response
 {
-    /** @var int $status HTTP Status Code */
-    protected int $status;
-
     /** @var string $error HTTP Status Code message */
     protected string $error;
 
@@ -29,19 +26,11 @@ class ErrorResponse extends Response
     }
 
     /**
-     * @return int
-     */
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    /**
      * @return string
      */
     public function getError(): string
     {
-        return $this->error;
+        return $this->error ?? 'UNKNOWN';
     }
 
     /**
@@ -49,7 +38,7 @@ class ErrorResponse extends Response
      */
     public function getDetails(): array
     {
-        return $this->details;
+        return $this->details ?? [];
     }
 
     /**
@@ -57,6 +46,6 @@ class ErrorResponse extends Response
      */
     public function getPath(): string
     {
-        return $this->path;
+        return $this->path ?? 'UNKNOWN';
     }
 }

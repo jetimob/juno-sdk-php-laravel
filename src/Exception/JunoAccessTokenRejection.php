@@ -15,7 +15,7 @@ class JunoAccessTokenRejection extends JunoException
 
         parent::__construct(sprintf(
             '[%s]: %s; %s',
-            $response->getStatus(),
+            $response->getStatusCode(),
             $response->getError(),
             $details
         ), 0, null);
