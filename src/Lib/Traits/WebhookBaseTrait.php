@@ -1,6 +1,6 @@
 <?php
 
-namespace Jetimob\Juno\Lib\Http\Webhook;
+namespace Jetimob\Juno\Lib\Traits;
 
 use Jetimob\Juno\Lib\Model\WebhookEventType;
 

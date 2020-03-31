@@ -3,6 +3,7 @@
 namespace Jetimob\Juno\Lib\Http\Webhook;
 
 use Jetimob\Juno\Lib\Http\Response;
+use Jetimob\Juno\Lib\Traits\WebhookBaseTrait;
 
 /**
  * Class WebhookConsultResponse
