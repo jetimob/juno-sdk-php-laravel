@@ -10,9 +10,9 @@ abstract class Response
 {
     use Serializable;
 
-    private int $timestamp;
+    protected int $timestamp;
 
-    private int $statusCode;
+    protected int $statusCode;
 
     public function __construct()
     {

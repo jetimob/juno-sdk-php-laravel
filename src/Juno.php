@@ -66,7 +66,6 @@ class Juno
         // check if we got all required keys in the config file
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
             if (!array_key_exists($key, $config) || empty($config[$key])) {
-                Log::info('config', $config);
                 throw new JunoException(sprintf(
                     'missing required keys in juno\'s configuration file [%s]',
                     implode(', ', self::CONFIG_REQUIRED_KEYS),
@@ -213,20 +212,24 @@ class Juno
         } catch (ClientException | ServerException $e) {
             $statusCode = $e->getCode();
 
-            if (!in_array($statusCode, $this->getConfig('recoverable_status_codes', []))) {
+            if (!$this->getConfig('enable_recover_attempt', false)) {
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
-                $this->logRequestError(
-                    'request failed with an unrecoverable status code',
-                    $request,
-                    $statusCode,
-                );
-            } elseif ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
-                $this->logRequestError('request failed after max attempts reached', $request, $statusCode);
-                $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
-                $failedAfterMaxAttempts = true;
             } else {
-                usleep($this->requestAttemptDelay * 1000);
-                return $this->request(...func_get_args());
+                if (!in_array($statusCode, $this->getConfig('recoverable_status_codes', []))) {
+                    $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                    $this->logRequestError(
+                        'request failed with an unrecoverable status code',
+                        $request,
+                        $statusCode,
+                    );
+                } elseif ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
+                    $this->logRequestError('request failed after max attempts reached', $request, $statusCode);
+                    $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                    $failedAfterMaxAttempts = true;
+                } else {
+                    usleep($this->requestAttemptDelay * 1000);
+                    return $this->request(...func_get_args());
+                }
             }
         } catch (Exception $e) {
             $this->currentRequestAttempt = 0;
@@ -285,7 +288,7 @@ class Juno
      *
      * @return string
      */
-    private function getEnv(): string
+    public function getEnv(): string
     {
         $env = $this->getConfig('environment');
 
@@ -323,7 +326,7 @@ class Juno
      * @param array $with - merges custom headers with the default ones.
      * @return array
      */
-    private function makeApiHeaders(array $with = []): array
+    public function makeApiHeaders(array $with = []): array
     {
         return [
             RequestOptions::HEADERS => array_merge([

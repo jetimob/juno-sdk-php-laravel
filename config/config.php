@@ -47,6 +47,10 @@ return [
     // Time in ms to wait before trying to execute a new request attempt.
     'request_attempt_delay' => 500,
 
+    // Set this to true if you want to automatically resend the request if the response doesn't succeed and the
+    // response's status code is present in the recoverable_status_codes array
+    'enable_recover_attempt' => false,
+
     // Which HTTP status codes are considered recoverable. Only the ones specified in this array will trigger a
     // reattempt in case of a failed request.
     'recoverable_status_codes' => [
