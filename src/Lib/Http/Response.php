@@ -180,7 +180,7 @@ abstract class Response
         };
 
         if ($this->failed()) {
-            return $fPrintProp(['timestamp', 'status', 'error', 'details', 'path']);
+            return $fPrintProp(['timestamp', 'statusCode', 'error', 'details', 'path']);
         }
 
         $props = Reflect::properties(ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC, $this);
