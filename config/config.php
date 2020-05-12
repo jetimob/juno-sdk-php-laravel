@@ -57,4 +57,11 @@ return [
 //        Response::HTTP_INTERNAL_SERVER_ERROR,
         Response::HTTP_UNAUTHORIZED,
     ],
+
+    // Set these values if you want to encrypt the request before sending it to base_uri
+    // there is no encryption in Juno server! This was added as an option to encrypt the request sent to a custom
+    // middleware that safely stores the access tokens.
+    // Normally you SHOULD leave these values as they are.
+    'request_encryption_key' => env('JUNO_ENCRYPTION_KEY', null),
+    'request_encryption_cipher' => env('JUNO_ENCRYPTION_CIPHER', 'AES-256-CBC'),
 ];

@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Cache;
 use Jetimob\Juno\Exception\EmptyResponseClassException;
 use Jetimob\Juno\Exception\JunoAccessTokenRejection;
@@ -50,6 +51,8 @@ class Juno
 
     private Client $authzClient;
 
+    private ?Encrypter $encrypter = null;
+
     /**
      * Juno constructor.
      *
@@ -62,6 +65,13 @@ class Juno
         $this->gruzzleOptions = array_key_exists('gruzzle', $config) ? $config['gruzzle'] : [];
         $this->requestMaxAttempts = $config['request_max_attempts'];
         $this->requestAttemptDelay = $config['request_attempt_delay'];
+
+        $encryptionKey = $this->getConfig('request_encryption_key');
+        $encryptionCipher = $this->getConfig('request_encryption_cipher');
+
+        if (!empty($encryptionKey) && !empty($encryptionCipher)) {
+            $this->encrypter = new Encrypter($encryptionKey, $encryptionCipher);
+        }
 
         // check if we got all required keys in the config file
         foreach (self::CONFIG_REQUIRED_KEYS as $key) {
@@ -78,7 +88,7 @@ class Juno
                 'Authorization' => sprintf(
                     'Basic %s',
                     base64_encode(sprintf('%s:%s', $config['clientId'], $config['secret']))
-                ),
+                 ),
             ],
         ]);
 
@@ -190,6 +200,15 @@ class Juno
             $requestOptions[RequestOptions::HEADERS] = [
                 'Authorization' => sprintf('Bearer %s', $this->getAccessToken()),
             ];
+        }
+
+        if (!is_null($this->encrypter)) {
+            $requestOptions[$request->getBodyType()] = [$this->encrypter->encrypt([
+                'request_type' => get_class($request),
+                'options' => array_merge(json_decode(json_encode($client->getConfig()), true), $requestOptions),
+                'method' => $request->getMethod(),
+                'urn' => $request->getUrn(),
+            ])];
         }
 
         $failedAfterMaxAttempts = false;
