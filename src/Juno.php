@@ -230,12 +230,15 @@ class Juno
             $instance->setStatusCode($response->getStatusCode());
         } catch (ClientException | ServerException $e) {
             $statusCode = $e->getCode();
-
-            if (!$this->getConfig('enable_recover_attempt', false)) {
+            $setInstanceFromError = function () use (&$instance, $e) {
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                $instance->setStatusCode($e->getCode());
+            };
+            if (!$this->getConfig('enable_recover_attempt', false)) {
+                $setInstanceFromError();
             } else {
                 if (!in_array($statusCode, $this->getConfig('recoverable_status_codes', []))) {
-                    $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                    $setInstanceFromError();
                     $this->logRequestError(
                         'request failed with an unrecoverable status code',
                         $request,
@@ -243,7 +246,7 @@ class Juno
                     );
                 } elseif ($this->currentRequestAttempt++ === $this->requestMaxAttempts) {
                     $this->logRequestError('request failed after max attempts reached', $request, $statusCode);
-                    $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
+                    $setInstanceFromError();
                     $failedAfterMaxAttempts = true;
                 } else {
                     usleep($this->requestAttemptDelay * 1000);
