@@ -14,7 +14,7 @@ class Payment
 
     public string $date;
 
-    public string $releaseDate;
+    public ?string $releaseDate;
 
     public float $amount;
 
