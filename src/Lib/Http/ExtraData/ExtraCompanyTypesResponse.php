@@ -14,7 +14,7 @@ class ExtraCompanyTypesResponse extends Response
     /** @var string[] $companyTypes */
     public array $companyTypes;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->companyTypes = !empty($this->data->companyTypes) ? $this->data->companyTypes : [];
     }

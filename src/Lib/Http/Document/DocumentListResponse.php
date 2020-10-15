@@ -15,7 +15,7 @@ class DocumentListResponse extends Response
     /** @var DocumentResource[] $documents */
     public array $documents;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->documents = $this->deserializeEmbeddedArray('documents', DocumentResource::class);
     }

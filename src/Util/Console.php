@@ -4,7 +4,7 @@ namespace Jetimob\Juno\Util;
 
 class Console
 {
-    public static function log($msg, ...$args)
+    public static function log($msg, ...$args): void
     {
         if (count($args) > 0) {
             $msg = sprintf($msg, ...$args);
@@ -14,7 +14,7 @@ class Console
             $msg = 'NULL';
         }
 
-        $encode = fn () => json_encode($msg, JSON_PRETTY_PRINT);
+        $encode = static fn () => json_encode($msg, JSON_PRETTY_PRINT);
 
         if (is_array($msg)) {
             $msg = $encode();

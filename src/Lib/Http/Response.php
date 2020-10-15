@@ -159,13 +159,13 @@ abstract class Response
      * Complex objects (non native) require manual initialization. Override this function to correctly initialize an
      * object instance.
      */
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
     }
 
     public function __toString()
     {
-        $fPrintProp = function (array $properties) {
+        $fPrintProp = function (array $properties): string {
             $data = [];
 
             foreach ($properties as $p) {

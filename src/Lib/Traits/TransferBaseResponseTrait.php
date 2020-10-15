@@ -7,6 +7,4 @@ trait TransferBaseResponseTrait
     public string $eventId;
 
     public string $eventType;
-
-    public string $timestamp;
 }

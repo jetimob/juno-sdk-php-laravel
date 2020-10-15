@@ -8,5 +8,4 @@ class EmptyResponseClassException extends JunoException
     {
         parent::__construct(sprintf('expected $responseClass declaration in \'%s\', got nothing', $class));
     }
-
 }

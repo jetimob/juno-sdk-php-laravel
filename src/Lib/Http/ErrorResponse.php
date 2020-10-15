@@ -15,7 +15,7 @@ class ErrorResponse extends Response
     /** @var string $path urn that caused an error */
     protected string $path;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!isset($this->data->details) || !is_array($this->data->details)) {
             $this->details = [];

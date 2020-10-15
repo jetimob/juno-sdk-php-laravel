@@ -19,7 +19,7 @@ class TransferNotification extends Response
     /** @var TransferData[] $transferData */
     public array $transferData;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!empty($this->data->data)) {
             $this->transferData = TransferData::deserializeArray($this->data->data);

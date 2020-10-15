@@ -13,13 +13,13 @@ class TransferTestCase extends TestCase
     {
         $bankAccount = new BankAccount();
         $bankAccount->accountType = BankAccount::CHECKING_ACCOUNT_TYPE;
-        $bankAccount->agencyNumber = '2941';
-        $bankAccount->bankNumber = '237';
-        $bankAccount->accountNumber = '89524';
+        $bankAccount->agencyNumber = '';
+        $bankAccount->bankNumber = '';
+        $bankAccount->accountNumber = '';
 
         $request = new TransferenceRequest();
-        $request->document = '01566139058';
-        $request->name = 'Alan Weingartner';
+        $request->document = '';
+        $request->name = '';
         $request->amount = 1.0;
         $request->bankAccount = $bankAccount;
 

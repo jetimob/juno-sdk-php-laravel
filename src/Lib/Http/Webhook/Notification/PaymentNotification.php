@@ -19,7 +19,7 @@ class PaymentNotification extends Response
     /** @var PaymentData[] $paymentData */
     public array $paymentData;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!empty($this->data->data)) {
             $this->paymentData = PaymentData::deserializeArray($this->data->data);

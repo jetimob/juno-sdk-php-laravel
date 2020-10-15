@@ -102,7 +102,7 @@ class AccountCreationRequest extends AccountRequest
         $schema = [...$this->bodySchema];
         $setIfModified = function ($advancedOpt) use (&$schema) {
             if (isset($this->{$advancedOpt})) {
-                array_push($schema, $advancedOpt);
+                $schema[] = $advancedOpt;
             }
         };
 

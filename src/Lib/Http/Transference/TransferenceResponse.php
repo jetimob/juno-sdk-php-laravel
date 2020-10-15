@@ -23,7 +23,7 @@ class TransferenceResponse extends Response
 
     public ?Recipient $recipient;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!empty($this->data->recipient)) {
             $this->recipient = Recipient::deserialize($this->data->recipient);

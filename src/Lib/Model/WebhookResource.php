@@ -20,12 +20,12 @@ class WebhookResource
     /** @var WebhookEventType[] $eventTypes */
     public array $eventTypes;
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->status === 'ACTIVE';
     }
 
-    public function isInactive()
+    public function isInactive(): bool
     {
         return !$this->isActive();
     }

@@ -20,5 +20,4 @@ class JunoAccessTokenRejection extends JunoException
             $details
         ), 0, null);
     }
-
 }

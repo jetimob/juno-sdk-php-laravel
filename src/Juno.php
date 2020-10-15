@@ -5,6 +5,7 @@ namespace Jetimob\Juno;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Encryption\Encrypter;
@@ -228,9 +229,9 @@ class Juno
             /** @var Response $instance */
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->setStatusCode($response->getStatusCode());
-        } catch (ClientException | ServerException $e) {
+        } catch (ClientException | ServerException | GuzzleException $e) {
             $statusCode = $e->getCode();
-            $setInstanceFromError = function () use (&$instance, $e) {
+            $setInstanceFromError = static function () use (&$instance, $e) {
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
                 $instance->setStatusCode($e->getCode());
             };
@@ -408,7 +409,7 @@ class Juno
         );
     }
 
-    private function logRequestError(string $message, Request $request, $statusCode)
+    private function logRequestError(string $message, Request $request, $statusCode): void
     {
         Log::error($message, [
             'urn' => $request->getUrn(),

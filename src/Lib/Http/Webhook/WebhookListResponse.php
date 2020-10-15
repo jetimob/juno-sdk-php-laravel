@@ -14,7 +14,7 @@ class WebhookListResponse extends Response
 {
     public array $webhooks;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->webhooks = $this->deserializeEmbeddedArray('webhooks', WebhookResource::class);
     }

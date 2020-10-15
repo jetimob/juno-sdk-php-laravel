@@ -17,7 +17,7 @@ class Log
             return;
         }
 
-        $message = sprintf('[JUNO|%s]: %s', substr(strtoupper($level), 0, 3), $message);
+        $message = sprintf('[JUNO|%s]: %s', strtoupper(substr($level, 0, 3)), $message);
         \Illuminate\Support\Facades\Log::{$level}($message, $context);
     }
 

@@ -31,7 +31,7 @@ class ChargeConsultResponse extends Response
     /** @var Payment[] $payments */
     public array $payments;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!empty($this->data->billetDetails)) {
             $this->billetDetails = BilletDetails::deserialize($this->data->billetDetails);

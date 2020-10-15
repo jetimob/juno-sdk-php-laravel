@@ -12,7 +12,7 @@ use Jetimob\Juno\Lib\Http\Response;
  */
 class ChargeCancelResponse extends Response
 {
-    public function canceled()
+    public function canceled(): bool
     {
         return $this->getStatusCode() === 204;
     }

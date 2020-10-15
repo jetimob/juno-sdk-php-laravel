@@ -18,7 +18,7 @@ trait WebhookBaseTrait
     /** @var WebhookEventType[] $eventTypes */
     public array $eventTypes;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         if (!empty($this->data->eventTypes)) {
             $this->eventTypes = WebhookEventType::deserializeArray($this->data->eventTypes);

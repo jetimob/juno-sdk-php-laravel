@@ -5,7 +5,6 @@ namespace Jetimob\Juno\Lib\Http\Charge;
 use Jetimob\Juno\Lib\Http\Response;
 use Jetimob\Juno\Lib\Model\ChargeResource;
 use Jetimob\Juno\Lib\Model\Link;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Crie cobranças com ou sem split para boleto e cartão de crédito.
@@ -31,7 +30,7 @@ class ChargeCreationResponse extends Response
     /** @var Link[] $_links */
     protected ?array $_links = null;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->charges = $this->deserializeEmbeddedArray('charges', ChargeResource::class);
     }

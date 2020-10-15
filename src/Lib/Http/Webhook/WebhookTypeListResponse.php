@@ -14,7 +14,7 @@ class WebhookTypeListResponse extends Response
 {
     public array $eventTypes;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->eventTypes = $this->deserializeEmbeddedArray('eventTypes', WebhookEventType::class);
     }

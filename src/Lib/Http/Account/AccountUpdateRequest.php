@@ -14,28 +14,28 @@ use Jetimob\Juno\Lib\Model\LegalRepresentative;
  */
 class AccountUpdateRequest extends AccountRequest
 {
-    /** @var string $companyType MANDATORY FOR COMPANIES */
+    /** @var string|null $companyType MANDATORY FOR COMPANIES */
     public ?string $companyType;
 
-    /** @var string $name [0 .. 80] chars */
+    /** @var string|null $name [0 .. 80] chars */
     public ?string $name;
 
-    /** @var string $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
+    /** @var string|null $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
     public ?string $birthDate;
 
-    /** @var string $linesOfBusiness [0 .. 100 chars] free description */
+    /** @var string|null $linesOfBusiness [0 .. 100 chars] free description */
     public ?string $linesOfBusiness;
 
-    /** @var string $email [0 .. 80] chars */
+    /** @var string|null $email [0 .. 80] chars */
     public ?string $email;
 
-    /** @var string $phone [10 .. 16] chars */
+    /** @var string|null $phone [10 .. 16] chars */
     public ?string $phone;
 
-    /** @var int $businessArea business area id */
+    /** @var int|null $businessArea business area id */
     public ?int $businessArea;
 
-    /** @var string $tradingName [0 .. 80] chars */
+    /** @var string|null $tradingName [0 .. 80] chars */
     public ?string $tradingName;
 
     public ?Address $address;

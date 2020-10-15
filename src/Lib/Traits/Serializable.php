@@ -74,7 +74,7 @@ trait Serializable
         return $instance;
     }
 
-    public function setData(object $data)
+    public function setData(object $data): void
     {
         $this->data = $data;
     }
@@ -87,7 +87,7 @@ trait Serializable
         return $this->data;
     }
 
-    public static function deserializeArray(array $data)
+    public static function deserializeArray(array $data): array
     {
         $items = [];
 

@@ -70,7 +70,7 @@ class AuthorizationResponse extends Response implements Serializable
     /**
      * @inheritDoc
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([
             $this->access_token,
@@ -87,9 +87,9 @@ class AuthorizationResponse extends Response implements Serializable
     /**
      * @inheritDoc
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
-        list(
+        [
             $this->access_token,
             $this->token_type,
             $this->expires_in,
@@ -98,7 +98,7 @@ class AuthorizationResponse extends Response implements Serializable
             $this->jti,
             $timestamp,
             $statusCode,
-        ) = unserialize($serialized);
+        ] = unserialize($serialized, ['allowed_classes' => false]);
 
         $this->setTimestamp($timestamp);
         $this->setStatusCode($statusCode);

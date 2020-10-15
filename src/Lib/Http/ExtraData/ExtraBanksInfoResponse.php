@@ -10,7 +10,7 @@ class ExtraBanksInfoResponse extends Response
     /** @var BankResource[] $banks */
     public array $banks;
 
-    public function initComplexObjects()
+    public function initComplexObjects(): void
     {
         $this->banks = $this->deserializeEmbeddedArray('banks', BankResource::class);
     }

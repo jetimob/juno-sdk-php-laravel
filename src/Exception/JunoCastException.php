@@ -8,5 +8,4 @@ class JunoCastException extends JunoException
     {
         parent::__construct($message, $code, $previous);
     }
-
 }
