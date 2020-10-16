@@ -2,10 +2,8 @@
 
 namespace Jetimob\Juno;
 
-use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Encryption\Encrypter;
@@ -23,6 +21,7 @@ use Jetimob\Juno\Lib\Http\ErrorResponse;
 use Jetimob\Juno\Lib\Http\Request;
 use Jetimob\Juno\Lib\Http\Response;
 use Jetimob\Juno\Util\Log;
+use Throwable;
 
 /**
  * Class Juno
@@ -126,6 +125,7 @@ class Juno
      * @throws MissingPropertyBodySchemaException
      * @throws WrongResponseTypeException
      * @throws WrongRequestTypeException
+     * @throws JunoException
      */
     private function retrieveAccessToken(): Response
     {
@@ -170,6 +170,7 @@ class Juno
      * @throws MissingPropertyBodySchemaException
      * @throws WrongRequestTypeException
      * @throws WrongResponseTypeException
+     * @throws JunoException
      */
     public function request($request, string $resourceToken, Client $client = null)
     {
@@ -229,12 +230,13 @@ class Juno
             /** @var Response $instance */
             $instance = $className::deserialize($response->getBody()->getContents());
             $instance->setStatusCode($response->getStatusCode());
-        } catch (ClientException | ServerException | GuzzleException $e) {
+        } catch (ClientException | ServerException $e) {
             $statusCode = $e->getCode();
             $setInstanceFromError = static function () use (&$instance, $e) {
                 $instance = ErrorResponse::deserialize($e->getResponse()->getBody()->getContents());
                 $instance->setStatusCode($e->getCode());
             };
+
             if (!$this->getConfig('enable_recover_attempt', false)) {
                 $setInstanceFromError();
             } else {
@@ -254,9 +256,9 @@ class Juno
                     return $this->request(...func_get_args());
                 }
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->currentRequestAttempt = 0;
-            throw new JunoCastException($e);
+            throw new JunoException($e);
         }
 
         if ($this->currentRequestAttempt > 0 && !$failedAfterMaxAttempts) {
@@ -283,6 +285,7 @@ class Juno
      * @throws WrongResponseTypeException
      * @throws WrongRequestTypeException
      * @throws MissingPropertyBodySchemaException
+     * @throws JunoException
      */
     private function getAccessToken(): string
     {
@@ -415,7 +418,7 @@ class Juno
             'urn' => $request->getUrn(),
             'method' => $request->getMethod(),
             'status_code' => $statusCode,
-            'attemps' => $this->currentRequestAttempt,
+            'attempts' => $this->currentRequestAttempt,
         ]);
     }
 
