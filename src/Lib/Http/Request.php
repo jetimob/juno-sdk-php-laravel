@@ -160,7 +160,7 @@ abstract class Request
     private function sanitizeArray(array &$data): array
     {
         foreach (array_keys($data) as $arrK) {
-            if (empty($data[$arrK])) {
+            if (is_null($data[$arrK])) {
                 unset($data[$arrK]);
             } elseif (is_array($data[$arrK])) {
                 $data[$arrK] = $this->sanitizeArray($data[$arrK]);
