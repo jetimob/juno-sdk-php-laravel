@@ -4,6 +4,7 @@ namespace Jetimob\Juno;
 
 use Illuminate\Support\ServiceProvider;
 use Jetimob\Juno\Console\InstallJunoPackage;
+use Jetimob\Juno\Console\ClearCache;
 
 class JunoServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,7 @@ class JunoServiceProvider extends ServiceProvider
 
             $this->commands([
                 InstallJunoPackage::class,
+                ClearCache::class,
             ]);
         }
     }
