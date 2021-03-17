@@ -1,13 +1,17 @@
 {
-    "name": "jetimob/juno-sdk-php-laravel",
-    "homepage": "https://github.com/jetimob/juno-sdk-php-laravel",
-    "description": "Juno integration developed to Jetimob's internal use.",
+    "name": "hugomarques62/juno-sdk-php-laravel",
+    "homepage": "https://github.com/hugomarques62/juno-sdk-php-laravel",
+    "description": "Fork Juno integration developed",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Alan Weingartner",
             "email": "hi@alanwgt.com"
+        },
+        {
+            "name": "Hugo Marques",
+            "email": "hugo.marques62@gmail.com"
         }
     ],
     "require": {
