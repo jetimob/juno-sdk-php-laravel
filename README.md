@@ -9,7 +9,7 @@ Make sure to add **`JUNO_PRIVATE_TOKEN`**, **`JUNO_CLIENT_ID`** and **`JUNO_CLIE
 Using Composer:
 
 ```sh
-$ composer require jetimob/juno-sdk-php-laravel
+$ composer require hugomarques62/juno-sdk-php-laravel
 ```
 
 ### Publishing configurations
