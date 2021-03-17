@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Jetimob\Juno\Lib\Http\Account;
 
 use Jetimob\Juno\Lib\Http\Method;
 use Jetimob\Juno\Lib\Model\Address;
