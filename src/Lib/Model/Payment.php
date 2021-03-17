@@ -13,6 +13,8 @@ class Payment
     public string $chargeId;
 
     public string $date;
+    public array $billing;
+    public array $creditCardDetails;
 
     public ?string $releaseDate;
 

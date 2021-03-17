@@ -1,11 +1,12 @@
 <?php
 
-namespace Jetimob\Juno\Lib\Http\Account;
+namespace App;
 
 use Jetimob\Juno\Lib\Http\Method;
 use Jetimob\Juno\Lib\Model\Address;
 use Jetimob\Juno\Lib\Model\BankAccount;
 use Jetimob\Juno\Lib\Model\LegalRepresentative;
+use Jetimob\Juno\Lib\Http\Account\AccountRequest;
 
 /**
  * Class AccountCreationRequest
@@ -51,6 +52,12 @@ class AccountCreationRequest extends AccountRequest
     /** @var string $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
     public string $birthDate;
 
+    public string $monthlyIncomeOrRevenue;
+
+    public string $cnae;
+
+    public string $establishmentDate;
+
     public Address $address;
 
     public BankAccount $bankAccount;
@@ -95,6 +102,9 @@ class AccountCreationRequest extends AccountRequest
         'emailOptOut',
         'autoApprove',
         'autoTransfer',
+        'monthlyIncomeOrRevenue',
+        'establishmentDate',
+        'cnae'
     ];
 
     public function getBodySchema(): array
