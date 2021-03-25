@@ -43,6 +43,7 @@ class AccountUpdateRequest extends AccountRequest
     public ?BankAccount $bankAccount;
 
     public ?LegalRepresentative $legalRepresentative;
+    public ?array $companyMembers;
 
     protected array $bodySchema = [
         'companyType',
@@ -56,6 +57,7 @@ class AccountUpdateRequest extends AccountRequest
         'address',
         'bankAccount',
         'legalRepresentative',
+        'companyMembers'
     ];
 
     /**

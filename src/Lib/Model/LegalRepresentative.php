@@ -15,4 +15,5 @@ class LegalRepresentative
 
     /** @var string $birthDate <date> YYYY-MM-DD */
     public string $birthDate;
+    public string $motherName;
 }

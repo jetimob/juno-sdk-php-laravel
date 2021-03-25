@@ -85,6 +85,8 @@ class AccountCreationRequest extends AccountRequest
 
     public bool $autoTransfer;
 
+    public array $companyMembers;
+
     /** @var array $bodySchema defines the body schema common for both types of account */
     protected array $bodySchema = [
         'companyType',
@@ -104,7 +106,8 @@ class AccountCreationRequest extends AccountRequest
         'autoTransfer',
         'monthlyIncomeOrRevenue',
         'establishmentDate',
-        'cnae'
+        'cnae',
+        'companyMembers'
     ];
 
     public function getBodySchema(): array
