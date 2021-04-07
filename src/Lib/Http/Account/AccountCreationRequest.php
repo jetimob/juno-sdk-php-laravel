@@ -20,6 +20,7 @@ class AccountCreationRequest extends AccountRequest
      * - All features available
      */
     public const PAYMENT_ACCOUNT_TYPE = 'PAYMENT';
+
     /**
      * @var string RECEIVING_ACCOUNT_TYPE
      * - A specific digital account only used for receiving
@@ -60,12 +61,6 @@ class AccountCreationRequest extends AccountRequest
 
     public string $type = self::PAYMENT_ACCOUNT_TYPE;
 
-    /** @var string $linesOfBusiness [0 .. 100 chars] free description */
-    public string $linesOfBusiness;
-
-    /** @var string $businessUrl [0 .. 100 chars] for RECEIVING ACCOUNT ONLY */
-    public string $businessUrl;
-
     // the bool default values are specified in Juno's documentation
     // all bool options defined below are marked as ADVANCED and should require additional permissions
 
@@ -74,27 +69,54 @@ class AccountCreationRequest extends AccountRequest
     /** @var bool $emailOptOut enables transparent checkout */
     public bool $emailOptOut;
 
-    public bool $autoApprove;
+    /** @var bool boolean  Define se as transferências da conta serão feitas automaticamente.
+     * Caso haja saldo na conta digital em questão, a transferência será feita todos os dias.
+     * Requer permissão avançada.
+     */
+    public bool $autoTransfer = false;
 
-    public bool $autoTransfer;
+    /** @var bool Define se o atributo name poderá ou não receber o nome social. Válido apenas para PF. */
+    public bool $socialName = false;
+
+    /** @var float Renda mensal ou receita. Obrigatório para PF e PJ. */
+    public float $monthlyIncomeOrRevenue;
+
+    /** @var string Campo destinado ao CNAE(Classificação Nacional de Atividades Econômicas) da empresa.
+     * Obrigatório para PJ.
+     */
+    public string $cnae;
+
+    /** @var string Data de abertura da empresa. Obrigatório para PJ. */
+    public string $establishmentDate;
+
+    /** @var bool Define se o cadastro pertence a uma pessoa politicamente exposta. */
+    public bool $pep = false;
+
+    /** @var LegalRepresentative[] Quadro societário da empresa. Obrigatório para contas PJ de companyType SA e LTDA */
+    public ?array $companyMembers;
 
     /** @var array $bodySchema defines the body schema common for both types of account */
     protected array $bodySchema = [
-        'companyType',
+        'type',
         'name',
         'document',
         'email',
+        'birthDate',
         'phone',
         'businessArea',
+        'companyType',
         'tradingName',
-        'birthDate',
+        'legalRepresentative',
         'address',
         'bankAccount',
-        'legalRepresentative',
-        'type',
         'emailOptOut',
-        'autoApprove',
         'autoTransfer',
+        'socialName',
+        'monthlyIncomeOrRevenue',
+        'cnae',
+        'establishmentDate',
+        'pep',
+        'companyMembers',
     ];
 
     public function getBodySchema(): array
@@ -107,14 +129,13 @@ class AccountCreationRequest extends AccountRequest
         };
 
         $setIfModified('emailOptOut');
-        $setIfModified('autoApprove');
         $setIfModified('autoTransfer');
 
         if ($this->type === self::PAYMENT_ACCOUNT_TYPE) {
-            return [...$this->bodySchema, 'linesOfBusiness'];
+            return [...$this->bodySchema, 'linesOfBusiness', 'companyMembers'];
         }
 
-        return [...$this->bodySchema, 'businessUrl'];
+        return $this->bodySchema;
     }
 
     /**

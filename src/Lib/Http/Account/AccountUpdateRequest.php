@@ -23,8 +23,8 @@ class AccountUpdateRequest extends AccountRequest
     /** @var string|null $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
     public ?string $birthDate;
 
-    /** @var string|null $linesOfBusiness [0 .. 100 chars] free description */
-    public ?string $linesOfBusiness;
+    /** @var string $linesOfBusiness [0 .. 100 chars] free description */
+    public string $linesOfBusiness;
 
     /** @var string|null $email [0 .. 80] chars */
     public ?string $email;
