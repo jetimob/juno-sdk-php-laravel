@@ -61,6 +61,9 @@ class AccountCreationRequest extends AccountRequest
 
     public string $type = self::PAYMENT_ACCOUNT_TYPE;
 
+    /** @var string $linesOfBusiness [0 .. 100 chars] free description */
+    public string $linesOfBusiness;
+
     // the bool default values are specified in Juno's documentation
     // all bool options defined below are marked as ADVANCED and should require additional permissions
 
