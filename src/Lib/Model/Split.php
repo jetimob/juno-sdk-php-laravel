@@ -17,9 +17,9 @@ class Split
     /** @var float|null $percentage defines the percentage of the value that the account will receive */
     public ?float $percentage;
 
-    /** @var bool|null $amountReminder indicates who receives the remaining amount in the case of a division of the
+    /** @var bool|null $amountRemainder indicates who receives the remaining amount in the case of a division of the
      * total transaction amount */
-    public ?bool $amountReminder;
+    public ?bool $amountRemainder;
 
     /** @var bool|null $chargeFee indicates whether only one recipient will be taxed or if the fees will be split
      * proportionally between all recipients */
