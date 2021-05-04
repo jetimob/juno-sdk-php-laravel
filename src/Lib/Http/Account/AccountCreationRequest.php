@@ -28,8 +28,8 @@ class AccountCreationRequest extends AccountRequest
      */
     public const RECEIVING_ACCOUNT_TYPE = 'RECEIVING';
 
-    /** @var string $companyType MANDATORY FOR COMPANIES */
-    public string $companyType;
+    /** @var string|null $companyType MANDATORY FOR COMPANIES */
+    public ?string $companyType;
 
     /** @var string $name [0 .. 80] chars */
     public string $name;
@@ -49,15 +49,15 @@ class AccountCreationRequest extends AccountRequest
     /** @var string $tradingName [0 .. 80] chars */
     public string $tradingName;
 
-    /** @var string $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
-    public string $birthDate;
+    /** @var string|null $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
+    public ?string $birthDate;
 
     public Address $address;
 
     public BankAccount $bankAccount;
 
-    /** @var LegalRepresentative $legalRepresentative MANDATORY FOR COMPANIES */
-    public LegalRepresentative $legalRepresentative;
+    /** @var \Jetimob\Juno\Lib\Model\LegalRepresentative|null $legalRepresentative MANDATORY FOR COMPANIES */
+    public ?LegalRepresentative $legalRepresentative;
 
     public string $type = self::PAYMENT_ACCOUNT_TYPE;
 
