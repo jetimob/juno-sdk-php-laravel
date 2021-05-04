@@ -17,6 +17,9 @@ class Billing
     /** @var string|null $email [0 .. 80] chars */
     public ?string $email;
 
+    /** @var \Jetimob\Juno\Lib\Model\Address */
+    public Address $address;
+
     /** @var string|null $secondaryEmail [0 .. 80] chars */
     public ?string $secondaryEmail;
 
