@@ -1,32 +1,33 @@
 {
     "name": "jetimob/juno-sdk-php-laravel",
-    "homepage": "https://github.com/jetimob/juno-sdk-php-laravel",
-    "description": "Juno integration developed to Jetimob's internal use.",
+    "keywords": ["laravel", "juno", "pix", "sdk", "pagamento", "boleto", "conta digital"],
+    "description": "SDK de integração com a Juno",
     "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Alan Weingartner",
-            "email": "hi@alanwgt.com"
-        }
-    ],
     "require": {
-        "php": "^7.4",
-        "guzzlehttp/guzzle": "^7.2",
-        "ext-json": "*"
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.3.0",
+        "jetimob/http-php-laravel": "^v1.0.0",
+        "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/console": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/container": "^6.0 || ^7.0 || ^8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.2",
-        "phpunit/phpunit": "^9.4"
+        "orchestra/testbench": "^v6.18.0",
+        "phpunit/phpunit": "^v9.5.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpmd/phpmd": "^2.10",
+        "friendsofphp/php-cs-fixer": "^3.0"
     },
+    "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jetimob\\Juno\\": "src"
+            "Jetimob\\Juno\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jetimob\\Juno\\Tests\\": "tests"
+            "Jetimob\\Juno\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -38,5 +39,12 @@
                 "Juno": "Jetimob\\Juno\\Facades\\Juno"
             }
         }
-    }
+    },
+    "authors": [
+        {
+            "name": "Alan Weingartner",
+            "email": "hi@alanwgt.com"
+        }
+    ],
+    "minimum-stability": "stable"
 }

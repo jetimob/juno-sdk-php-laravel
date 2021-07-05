@@ -1,45 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jetimob\Juno;
 
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use Jetimob\Juno\Console\InstallJunoPackage;
-use Jetimob\Juno\Console\ClearCache;
 
 class JunoServiceProvider extends ServiceProvider
 {
-    private function getConfigPath(): string
-    {
-        return sprintf('%s/../config/config.php', __DIR__);
-    }
-
     /**
-     * @inheritDoc
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom($this->getConfigPath(), 'juno');
-
-        $this->app->bind('juno', function ($app) {
-            return new Juno($app->config->get('juno'));
-        });
-    }
-
-    /**
-     * @inheritDoc
+     * Boot the service provider.
+     *
+     * @return void
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            // publishes config file
-            $this->publishes([
-                $this->getConfigPath() => config_path('juno.php')
-            ], 'config');
+        $src = realpath($raw = __DIR__ . '/../config/juno.php') ?: $raw;
 
-            $this->commands([
-                InstallJunoPackage::class,
-                ClearCache::class,
-            ]);
+        if ($this->app->runningInConsole()) {
+            $this->publishes([$src => config_path('juno.php')]);
         }
+
+        $this->mergeConfigFrom($src, 'juno');
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton('jetimob.juno', function (Container $app) {
+            return new Juno($app['config']['juno'] ?? []);
+        });
+
+        $this->app->alias('jetimob.juno', Juno::class);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return string[]
+     */
+    public function provides()
+    {
+        return [
+            'jetimob.juno',
+        ];
     }
 }
