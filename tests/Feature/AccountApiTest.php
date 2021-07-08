@@ -40,7 +40,7 @@ class AccountApiTest extends AbstractTestCase
             ->setPhone('+5533981287600')
             ->setLinesOfBusiness('FREE DESCRIPTION')
             ->setBusinessArea('1024')
-            ->setBirthDate(Juno::toDateString(1990, 12, 12))
+            ->setBirthDate(Juno::dateToString(1990, 12, 12))
             ->setAddress(
                 (new Address())
                     ->setCity('Novo Hamburgo')
@@ -72,7 +72,7 @@ class AccountApiTest extends AbstractTestCase
         $name = 'John Doe LTDA';
         $cnpj = '03627536000120';
         $cpf = '33657214607';
-        $birthDate = Juno::toDateString(1953, 03, 01);
+        $birthDate = Juno::dateToString(1953, 03, 01);
 
         return (new AccountDTO())
             ->setName($name)
@@ -85,7 +85,7 @@ class AccountApiTest extends AbstractTestCase
             ->setCompanyType('MEI')
             ->setMonthlyIncomeOrRevenue(10000)
             ->setCnae('8599603')
-            ->setEstablishmentDate(Juno::toDateString(2021, 01, 01))
+            ->setEstablishmentDate(Juno::dateToString(2021, 01, 01))
             ->setLegalRepresentative(
                 (new LegalRepresentative())
                     ->setName($name)

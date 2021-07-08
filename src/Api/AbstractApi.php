@@ -23,7 +23,7 @@ abstract class AbstractApi
     public function __construct(Juno $juno)
     {
         $this->client = $juno->getClient();
-        $this->resourceToken = config('juno.resource_token');
+        $this->resourceToken = config('juno.resource_token', '');
     }
 
     /**

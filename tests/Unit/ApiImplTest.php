@@ -16,8 +16,8 @@ class ApiImplTest extends AbstractTestCase
     }
 
     /** @test */
-    public function toDateStringShouldNotInvokeMagicCall(): void
+    public function dateToStringShouldNotInvokeMagicCall(): void
     {
-        $this->assertIsString(Juno::toDateString(1994, 01, 01));
+        $this->assertIsString(Juno::dateToString(1994, 01, 01));
     }
 }

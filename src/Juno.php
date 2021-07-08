@@ -60,7 +60,7 @@ class Juno
      * @param int|string $day
      * @return string
      */
-    public function toDateString($year, $month, $day): string
+    public function dateToString($year, $month, $day): string
     {
         return sprintf('%s-%02s-%02s', $year, $month, $day);
     }

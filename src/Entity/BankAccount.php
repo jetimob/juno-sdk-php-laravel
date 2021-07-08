@@ -12,7 +12,7 @@ class BankAccount
     public const CHECKING_ACCOUNT_TYPE = 'CHECKING';
     public const SAVINGS_ACCOUNT_TYPE = 'SAVINGS';
 
-    /** @var string|null $bankNumber Código de compensação do bancos do Brasil. Espera 3 digitos. */
+    /** @var string|null $bankNumber Código de compensação do banco do Brasil. Espera 3 dígitos. */
     protected ?string $bankNumber = null;
 
     /** @var string $agencyNumber Número da agência. Deve respeitar o padrão de cada banco. */
@@ -157,22 +157,32 @@ class BankAccount
         string $accountNumber,
         string $agencyNumber,
         string $accountType,
+        ?string $bankNumber = null,
         ?AccountHolder $accountHolder = null
     ): self {
         return (new static())
             ->setAccountNumber($accountNumber)
             ->setAgencyNumber($agencyNumber)
             ->setAccountType($accountType)
+            ->setBankNumber($bankNumber)
             ->setAccountHolder($accountHolder);
     }
 
-    public static function checking(string $accountNumber, string $agencyNumber, ?AccountHolder $accountHolder = null): self
-    {
-        return self::new($accountNumber, $agencyNumber, self::CHECKING_ACCOUNT_TYPE, $accountHolder);
+    public static function checking(
+        string $accountNumber,
+        string $agencyNumber,
+        ?string $bankNumber = null,
+        ?AccountHolder $accountHolder = null
+    ): self {
+        return self::new($accountNumber, $agencyNumber, self::CHECKING_ACCOUNT_TYPE, $bankNumber, $accountHolder);
     }
 
-    public static function savings(string $accountNumber, string $agencyNumber, ?AccountHolder $accountHolder = null): self
-    {
-        return self::new($accountNumber, $agencyNumber, self::SAVINGS_ACCOUNT_TYPE, $accountHolder);
+    public static function savings(
+        string $accountNumber,
+        string $agencyNumber,
+        ?string $bankNumber = null,
+        ?AccountHolder $accountHolder = null
+    ): self {
+        return self::new($accountNumber, $agencyNumber, self::SAVINGS_ACCOUNT_TYPE, $bankNumber, $accountHolder);
     }
 }

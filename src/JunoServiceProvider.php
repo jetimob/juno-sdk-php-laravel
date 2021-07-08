@@ -6,6 +6,7 @@ namespace Jetimob\Juno;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use Jetimob\Juno\Console\InstallJunoPackage;
 
 class JunoServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,9 @@ class JunoServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([$src => config_path('juno.php')]);
+            $this->commands([
+                InstallJunoPackage::class,
+            ]);
         }
 
         $this->mergeConfigFrom($src, 'juno');
