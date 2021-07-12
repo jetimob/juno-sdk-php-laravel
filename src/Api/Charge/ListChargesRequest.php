@@ -2,82 +2,86 @@
 
 namespace Jetimob\Juno\Api\Charge;
 
-class ListChargesRequest
+use Jetimob\Http\Traits\Serializable;
+
+class ListChargesRequest implements \JsonSerializable
 {
+    use Serializable;
+
     /** @var string|null $createdOnStart yyyy-MM-dd Busca pela criação da cobrança a partir dessa data */
-    public ?string $createdOnStart = null;
+    protected ?string $createdOnStart = null;
 
     /** @var string|null $createdOnEnd yyyy-MM-dd Busca pela criação da cobrança até */
-    public ?string $createdOnEnd = null;
+    protected ?string $createdOnEnd = null;
 
     /** @var string|null $dueDateStart yyyy-MM-dd Busca por vencimentos a partir dessa data */
-    public ?string $dueDateStart = null;
+    protected ?string $dueDateStart = null;
 
     /** @var string|null $dueDateEnd yyyy-MM-dd Busca por vencimentos a partir até essa data */
-    public ?string $dueDateEnd = null;
+    protected ?string $dueDateEnd = null;
 
     /** @var string|null $paymentDateStart yyyy-MM-dd Busca por pagamentos a partir dessa data */
-    public ?string $paymentDateStart = null;
+    protected ?string $paymentDateStart = null;
 
     /** @var string|null $paymentDateEnd yyyy-MM-dd Busca por pagamentos até essa data */
-    public ?string $paymentDateEnd = null;
+    protected ?string $paymentDateEnd = null;
 
     /** @var bool|null $showUnarchived Mostra cobranças que não foram ou estão arquivadas */
-    public ?bool $showUnarchived = null;
+    protected ?bool $showUnarchived = null;
 
     /** @var bool|null $showArchived Mostra cobranças que foram ou estão arquivadas */
-    public ?bool $showArchived = null;
+    protected ?bool $showArchived = null;
 
     /** @var bool|null $showDue Mostra cobranças vencidas */
-    public ?bool $showDue = null;
+    protected ?bool $showDue = null;
 
     /** @var bool|null $showNotDue Mostra cobranças que não estão vencidas */
-    public ?bool $showNotDue = null;
+    protected ?bool $showNotDue = null;
 
     /** @var bool|null $showPaid Mostra cobranças pagas */
-    public ?bool $showPaid = null;
+    protected ?bool $showPaid = null;
 
     /** @var bool|null $showNotPaid Mostra cobranças que não estão pagas */
-    public ?bool $showNotPaid = null;
+    protected ?bool $showNotPaid = null;
 
     /** @var bool|null $showCancelled Mostra cobranças canceladas */
-    public ?bool $showCancelled = null;
+    protected ?bool $showCancelled = null;
 
     /** @var bool|null $showNotCancelled Mostra cobranças que não estão canceladas */
-    public ?bool $showNotCancelled = null;
+    protected ?bool $showNotCancelled = null;
 
     /** @var bool|null $showManualReconciliation Mostra cobranças que foram baixadas manualmente */
-    public ?bool $showManualReconciliation = null;
+    protected ?bool $showManualReconciliation = null;
 
     /** @var bool|null $showNotManualReconciliation Mostra cobranças que não foram baixadas manualmente */
-    public ?bool $showNotManualReconciliation = null;
+    protected ?bool $showNotManualReconciliation = null;
 
     /** @var bool|null $showNotFailed Mostra cobranças que tiveram falha no pagamento. (Checkout transparente) */
-    public ?bool $showNotFailed = null;
+    protected ?bool $showNotFailed = null;
 
     /** @var string|null $orderBy Enum: "id" "dueDate" "amount" "paymentDate" Ordenação cobranças pelos filtros id, dueDate, amount e paymentDate */
-    public ?string $orderBy = null;
+    protected ?string $orderBy = null;
 
     /** @var bool|null $orderAsc Ordenação cobranças ascendente ou descentente */
-    public ?bool $orderAsc = null;
+    protected ?bool $orderAsc = null;
 
     /** @var int|null $pageSize Quantidade de cobranças por página */
-    public ?int $pageSize = null;
+    protected ?int $pageSize = null;
 
     /** @var int|null $page Número identificador da página */
-    public ?int $page = null;
+    protected ?int $page = null;
 
     /** @var string|null $firstObjectId <ObjectId> Define a partir de qual objeto charge será feita a busca */
-    public ?string $firstObjectId = null;
+    protected ?string $firstObjectId = null;
 
     /** @var string|null $firstValue Define a partir de qual valor será feita a busca */
-    public ?string $firstValue = null;
+    protected ?string $firstValue = null;
 
     /** @var string|null $lastObjectId <ObjectId> Define até qual objeto charge será feita a busca */
-    public ?string $lastObjectId = null;
+    protected ?string $lastObjectId = null;
 
     /** @var string|null $lastValue Define até qual valor será feita a busca */
-    public ?string $lastValue = null;
+    protected ?string $lastValue = null;
 
     /**
      * @param string|null $createdOnStart yyyy-MM-dd Busca pela criação da cobrança a partir dessa data

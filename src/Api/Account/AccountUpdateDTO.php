@@ -2,41 +2,44 @@
 
 namespace Jetimob\Juno\Api\Account;
 
+use Jetimob\Http\Traits\Serializable;
 use Jetimob\Juno\Entity\Address;
 use Jetimob\Juno\Entity\BankAccount;
 use Jetimob\Juno\Entity\LegalRepresentative;
 
-class AccountUpdateDTO
+class AccountUpdateDTO implements \JsonSerializable
 {
+    use Serializable;
+
     /** @var string|null $companyType MANDATORY FOR COMPANIES */
-    public ?string $companyType = null;
+    protected ?string $companyType = null;
 
     /** @var string|null $name [0 .. 80] chars */
-    public ?string $name = null;
+    protected ?string $name = null;
 
     /** @var string|null $birthDate MANDATORY FOR INDIVIDUALS <date> YYYY-MM-DD */
-    public ?string $birthDate = null;
+    protected ?string $birthDate = null;
 
     /** @var string|null $linesOfBusiness [0 .. 100 chars] free description */
-    public ?string $linesOfBusiness = null;
+    protected ?string $linesOfBusiness = null;
 
     /** @var string|null $email [0 .. 80] chars */
-    public ?string $email = null;
+    protected ?string $email = null;
 
     /** @var string|null $phone [10 .. 16] chars */
-    public ?string $phone = null;
+    protected ?string $phone = null;
 
     /** @var int|null $businessArea business area id */
-    public ?int $businessArea = null;
+    protected ?int $businessArea = null;
 
     /** @var string|null $tradingName [0 .. 80] chars */
-    public ?string $tradingName = null;
+    protected ?string $tradingName = null;
 
-    public ?Address $address = null;
+    protected ?Address $address = null;
 
-    public ?BankAccount $bankAccount = null;
+    protected ?BankAccount $bankAccount = null;
 
-    public ?LegalRepresentative $legalRepresentative = null;
+    protected ?LegalRepresentative $legalRepresentative = null;
 
     /**
      * @param string|null $companyType
@@ -146,5 +149,93 @@ class AccountUpdateDTO
     {
         $this->legalRepresentative = $legalRepresentative;
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyType(): ?string
+    {
+        return $this->companyType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBirthDate(): ?string
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLinesOfBusiness(): ?string
+    {
+        return $this->linesOfBusiness;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getBusinessArea(): ?int
+    {
+        return $this->businessArea;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTradingName(): ?string
+    {
+        return $this->tradingName;
+    }
+
+    /**
+     * @return Address|null
+     */
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    /**
+     * @return BankAccount|null
+     */
+    public function getBankAccount(): ?BankAccount
+    {
+        return $this->bankAccount;
+    }
+
+    /**
+     * @return LegalRepresentative|null
+     */
+    public function getLegalRepresentative(): ?LegalRepresentative
+    {
+        return $this->legalRepresentative;
     }
 }

@@ -68,7 +68,7 @@ class Juno
     public function __call(string $name, array $arguments)
     {
         if (!($apiImpl = $this->config['api_impl'] ?? null) || !array_key_exists($name, $apiImpl)) {
-            throw new RuntimeException("'api_impl' doesnt have api '$name' defined.");
+            throw new RuntimeException("O endpoint '$name' não foi implementado ou não existe");
         }
 
         return new $apiImpl[$name]($this);

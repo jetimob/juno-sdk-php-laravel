@@ -2,8 +2,12 @@
 
 namespace Jetimob\Juno\Entity\Pix;
 
-class MonetaryValue
+use Jetimob\Http\Traits\Serializable;
+
+class MonetaryValue implements \JsonSerializable
 {
+    use Serializable;
+
     /**
      * @var string $original Valor original da cobrança.
      * \d{1,10}\.\d{2}

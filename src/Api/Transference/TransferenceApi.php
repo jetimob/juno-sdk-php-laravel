@@ -8,7 +8,7 @@ use Jetimob\Juno\Entity\BankAccount;
 use Jetimob\Juno\Entity\PixBankAccount;
 
 /**
- * @link https://dev.juno.com.br/api/v2#operation/requestTransfer
+ * @link https://dev.juno.com.br/api/v2#tag/Transferencias
  */
 class TransferenceApi extends AbstractApi
 {

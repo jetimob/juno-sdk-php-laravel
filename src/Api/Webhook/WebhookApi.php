@@ -179,11 +179,11 @@ class WebhookApi extends AbstractApi
         $data = $notification->getHydrationData()['data'] ?? null;
 
         if (is_null($signature)) {
-            throw new InvalidArgumentException('Missing signature header');
+            throw new InvalidArgumentException('Header de assinatura ausente');
         }
 
         if (is_null($data)) {
-            throw new InvalidArgumentException('Couldn\'t retrieve data from the given notification');
+            throw new InvalidArgumentException('Falha ao obter os dados do webhook. Campo \'data\' ausente');
         }
 
         $hash = hash_hmac('sha256', json_encode($data, JSON_THROW_ON_ERROR), $secret);

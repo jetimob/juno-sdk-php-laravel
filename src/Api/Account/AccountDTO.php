@@ -2,13 +2,16 @@
 
 namespace Jetimob\Juno\Api\Account;
 
+use Jetimob\Http\Traits\Serializable;
 use Jetimob\Juno\Entity\Address;
 use Jetimob\Juno\Entity\BankAccount;
 use Jetimob\Juno\Entity\CompanyMember;
 use Jetimob\Juno\Entity\LegalRepresentative;
 
-class AccountDTO
+class AccountDTO implements \JsonSerializable
 {
+    use Serializable;
+
     /**
      * @var string PAYMENT_ACCOUNT_TYPE
      * - A fully functional payment digital account
@@ -28,37 +31,37 @@ class AccountDTO
      * Define a natureza de negócio. Obrigatório para contas PJ.
      * @link https://dev.juno.com.br/api/v2#operation/getCompanyTypes
      */
-    public string $companyType;
+    protected string $companyType;
 
     /**
      * @var string $name Nome da conta digital
      * [0 .. 80] chars.
      */
-    public string $name;
+    protected string $name;
 
     /**
      * @var string $document CPF/CNPJ da conta digital. Envie sem ponto ou traço
      * [11 .. 14] chars.
      */
-    public string $document;
+    protected string $document;
 
     /**
      * @var string $email Email da conta digital
      * [0 .. 80] chars.
      */
-    public string $email;
+    protected string $email;
 
     /**
      * @var string $phone Telefone da conta digital
      * [10 .. 16] chars.
      */
-    public string $phone;
+    protected string $phone;
 
     /**
      * @var int $businessArea Define a área de negócio da empresa.
      * @link https://dev.juno.com.br/api/v2#operation/getBusinessAreas
      */
-    public int $businessArea;
+    protected int $businessArea;
 
     /**
      * @var string $tradingName Nome fantasia.
@@ -66,97 +69,97 @@ class AccountDTO
      * Essa opção aparece apenas no endpoint para atualizar a conta.
      * [0 .. 80] chars
      */
-    public string $tradingName;
+    protected string $tradingName;
 
     /**
      * @var string $birthDate <date> Data de nascimento.
      * Obrigatório para contas PF.
      * 10 chars.
      */
-    public string $birthDate;
+    protected string $birthDate;
 
     /**
      * @var Address $address Endereço.
      */
-    public Address $address;
+    protected Address $address;
 
     /**
      * @var BankAccount $bankAccount Conta Bancária.
      */
-    public BankAccount $bankAccount;
+    protected BankAccount $bankAccount;
 
     /**
      * @var LegalRepresentative|null $legalRepresentative Representante Legal.
      * Obrigatório para contas PJ.
      */
-    public ?LegalRepresentative $legalRepresentative = null;
+    protected ?LegalRepresentative $legalRepresentative = null;
 
     /**
      * @var string Cria uma conta digital.
      * @link https://dev.juno.com.br/api/v2#tag/Contas-Digitais
      */
-    public string $type = self::PAYMENT_ACCOUNT_TYPE;
+    protected string $type = self::PAYMENT_ACCOUNT_TYPE;
 
     /**
      * @var string|null $linesOfBusiness Define a linha de negócio da empresa. Campo de livre preenchimento
      * [0 .. 100 chars]
      */
-    public ?string $linesOfBusiness = null;
+    protected ?string $linesOfBusiness = null;
 
     /**
      * @var string $businessUrl [0 .. 100 chars].
      */
-    public string $businessUrl;
+    protected string $businessUrl;
 
     /**
      * @var bool|null $emailOptOut Define se a conta criada receberá ou não quaisquer emails Juno como os enviados nas
      * operações de emissão de cobranças, trasnferências, entre outros. Requer permissão avançada. Útil para
      * comunicações com seu cliente diretamente pela sua aplicação.
      */
-    public ?bool $emailOptOut = null;
+    protected ?bool $emailOptOut = null;
 
     /**
      * @var bool|null $autoTransfer Define se as transferências da conta serão feitas automaticamente. Caso haja saldo
      * na conta digital em questão, a transferência será feita todos os dias. Requer permissão avançada.
      * PF.
      */
-    public ?bool $autoTransfer = null;
+    protected ?bool $autoTransfer = null;
 
     /**
      * @var bool|null $socialName Define se o atributo name poderá ou não receber o nome social.
      * Válido apenas para PF.
      */
-    public ?bool $socialName = null;
+    protected ?bool $socialName = null;
 
     /**
      * @var float|null $monthlyIncomeOrRevenue Renda mensal ou receita.
      * Obrigatório para PF e PJ.
      */
-    public ?float $monthlyIncomeOrRevenue = null;
+    protected ?float $monthlyIncomeOrRevenue = null;
 
     /**
      * @var string|null $cnae Campo destinado ao CNAE(Classificação Nacional de Atividades Econômicas) da empresa.
      * Obrigatório para PJ.
      * 7 chars.
      */
-    public ?string $cnae = null;
+    protected ?string $cnae = null;
 
     /**
      * @var string|null $establishmentDate Data de abertura da empresa.
      * Obrigatório para PJ.
      */
-    public ?string $establishmentDate = null;
+    protected ?string $establishmentDate = null;
 
     /**
      * @var bool|null $pep Define se o cadastro pertence a uma pessoa politicamente exposta.
      */
-    public ?bool $pep = null;
+    protected ?bool $pep = null;
 
     /**
      * @var CompanyMember[]|null $companyMembers Quadro societário da empresa.
      * Obrigatório para contas PJ de companyType SA e LTDA.
      */
-    public ?array $companyMembers = null;
+    protected ?array $companyMembers = null;
 
     /**
      * @param string $companyType

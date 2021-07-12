@@ -4,7 +4,7 @@ namespace Jetimob\Juno\Entity;
 
 use Jetimob\Http\Traits\Serializable;
 
-class CreditCardDetails
+class CreditCardDetails implements \JsonSerializable
 {
     use Serializable;
 

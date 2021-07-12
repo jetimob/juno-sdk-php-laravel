@@ -5,7 +5,7 @@ namespace Jetimob\Juno\Entity;
 use Jetimob\Http\Traits\Serializable;
 use Jetimob\Juno\Exception\InvalidArgumentException;
 
-class BankAccount
+class BankAccount implements \JsonSerializable
 {
     use Serializable;
 

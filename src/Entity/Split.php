@@ -4,7 +4,7 @@ namespace Jetimob\Juno\Entity;
 
 use Jetimob\Http\Traits\Serializable;
 
-class Split
+class Split implements \JsonSerializable
 {
     use Serializable;
 

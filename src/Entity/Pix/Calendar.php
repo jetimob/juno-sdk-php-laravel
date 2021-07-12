@@ -2,8 +2,12 @@
 
 namespace Jetimob\Juno\Entity\Pix;
 
-class Calendar
+use Jetimob\Http\Traits\Serializable;
+
+class Calendar implements \JsonSerializable
 {
+    use Serializable;
+
     /**
      * @var int $expiracao <int32> Tempo de vida da cobrança, especificado em segundos a partir da data de criação
      * (Calendario.criacao)
