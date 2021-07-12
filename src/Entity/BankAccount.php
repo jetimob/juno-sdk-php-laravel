@@ -88,12 +88,12 @@ class BankAccount
     }
 
     /**
-     * @param string $bankNumber Código de compensação do bancos do Brasil. Espera 3 digitos.
+     * @param string|null $bankNumber Código de compensação do bancos do Brasil. Espera 3 digitos.
      * @return BankAccount
      */
-    public function setBankNumber(string $bankNumber): BankAccount
+    public function setBankNumber(?string $bankNumber): BankAccount
     {
-        if (strlen($bankNumber) !== 3) {
+        if (!is_null($bankNumber) && strlen($bankNumber) !== 3) {
             throw new InvalidArgumentException('O código do banco deve conter 3 dígitos.');
         }
 
