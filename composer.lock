@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c6c610e3341c7c51da23c79257fb5d4",
+    "content-hash": "398c447ad66cd459e63fa5d355971356",
     "packages": [
         {
             "name": "brick/math",
@@ -667,16 +667,16 @@
         },
         {
             "name": "jetimob/http-php-laravel",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jetimob/http-php-laravel.git",
-                "reference": "8df6bab18d76a291e365720c5557378a1e8f8b7e"
+                "reference": "4d934b7e818c718342632e3e3945a35d362c5ed7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jetimob/http-php-laravel/zipball/8df6bab18d76a291e365720c5557378a1e8f8b7e",
-                "reference": "8df6bab18d76a291e365720c5557378a1e8f8b7e",
+                "url": "https://api.github.com/repos/jetimob/http-php-laravel/zipball/4d934b7e818c718342632e3e3945a35d362c5ed7",
+                "reference": "4d934b7e818c718342632e3e3945a35d362c5ed7",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "issues": "https://github.com/jetimob/http-php-laravel/issues",
                 "source": "https://github.com/jetimob/http-php-laravel"
             },
-            "time": "2021-04-27T13:04:08+00:00"
+            "time": "2021-07-12T13:49:28+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8394,7 +8394,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4 || ^8.0"
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
