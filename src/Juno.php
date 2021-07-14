@@ -2,6 +2,7 @@
 
 namespace Jetimob\Juno;
 
+use Jetimob\Http\Contracts\HttpProviderContract;
 use Jetimob\Http\Http;
 use Jetimob\Juno\Api\Account\AccountApi;
 use Jetimob\Juno\Api\AdditionalData\AdditionalDataApi;
@@ -25,7 +26,7 @@ use Jetimob\Juno\Exception\RuntimeException;
  * @method TransferenceApi transference()
  * @method WebhookApi webhook()
  */
-class Juno
+class Juno implements HttpProviderContract
 {
     protected Http $client;
     protected array $config;
@@ -39,7 +40,7 @@ class Juno
     /**
      * @return Http
      */
-    public function getClient(): Http
+    public function getHttpInstance(): Http
     {
         return $this->client;
     }

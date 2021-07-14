@@ -35,7 +35,7 @@ class WebhookApi extends AbstractApi
      */
     public function listTypes(): WebhookTypeListResponse
     {
-        return $this->mappedGet('notifications/event-type', WebhookTypeListResponse::class);
+        return $this->mappedGet('notifications/event-types', WebhookTypeListResponse::class);
     }
 
     /**

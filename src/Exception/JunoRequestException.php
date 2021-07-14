@@ -3,10 +3,11 @@
 namespace Jetimob\Juno\Exception;
 
 use GuzzleHttp\Exception\RequestException;
+use Jetimob\Http\Contracts\HydratableContract;
 use Jetimob\Http\Traits\Serializable;
 use Jetimob\Juno\Entity\ErrorDetail;
 
-class JunoRequestException extends RequestException implements JunoException
+class JunoRequestException extends RequestException implements JunoException, HydratableContract
 {
     use Serializable;
 

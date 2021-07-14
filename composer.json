@@ -6,8 +6,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^7.3.0",
-        "jetimob/http-php-laravel": "^v1.1.1",
+        "jetimob/http-php-laravel": "^v1.2.0",
         "illuminate/support": "^6.0 || ^7.0 || ^8.0",
         "illuminate/console": "^6.0 || ^7.0 || ^8.0",
         "illuminate/container": "^6.0 || ^7.0 || ^8.0"
@@ -43,8 +42,20 @@
     "authors": [
         {
             "name": "Alan Weingartner",
-            "email": "hi@alanwgt.com"
+            "email": "hi@alanwgt.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Jetimob",
+            "email": "contato@jetimob.com",
+            "homepage": "https://jetimob.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/jetimob/juno-sdk-php-laravel/issues"
+    },
+    "config": {
+        "sort-packages": true
+    },
     "minimum-stability": "stable"
 }

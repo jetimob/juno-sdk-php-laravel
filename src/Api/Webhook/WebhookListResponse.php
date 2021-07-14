@@ -13,6 +13,11 @@ class WebhookListResponse extends EmbeddedResponse
     /** @var WebhookResource[] $webhooks */
     protected array $webhooks;
 
+    public function webhooksItemType(): string
+    {
+        return WebhookResource::class;
+    }
+
     /**
      * @return WebhookResource[]
      */
