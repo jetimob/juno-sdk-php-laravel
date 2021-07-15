@@ -20,7 +20,10 @@ class JunoServiceProvider extends ServiceProvider
         $src = realpath($raw = __DIR__ . '/../config/juno.php') ?: $raw;
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([$src => config_path('juno.php')]);
+            $this->publishes([
+                $src => config_path('juno.php')
+            ], 'config');
+
             $this->commands([
                 InstallJunoPackage::class,
             ]);
