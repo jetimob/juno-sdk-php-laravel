@@ -19,6 +19,6 @@ class CompanyTypesListResponse extends JunoResponse
      */
     public function getCompanyTypes(): array
     {
-        return $this->companyTypes;
+        return $this->companyTypes ?? [];
     }
 }

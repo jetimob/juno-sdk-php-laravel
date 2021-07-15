@@ -138,7 +138,7 @@ class ChargeResource
      */
     public function getPayments(): array
     {
-        return $this->payments;
+        return $this->payments ?? [];
     }
 
     /**

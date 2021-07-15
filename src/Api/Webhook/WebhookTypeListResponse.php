@@ -23,6 +23,6 @@ class WebhookTypeListResponse extends EmbeddedResponse
      */
     public function getEventTypes(): array
     {
-        return $this->eventTypes;
+        return $this->eventTypes ?? [];
     }
 }

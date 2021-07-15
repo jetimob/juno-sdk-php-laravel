@@ -23,6 +23,6 @@ class PlanListResponse extends EmbeddedResponse
      */
     public function getPlans(): array
     {
-        return $this->plans;
+        return $this->plans ?? [];
     }
 }

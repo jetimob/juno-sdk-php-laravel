@@ -56,6 +56,6 @@ trait WebhookBase
      */
     public function getEventTypes(): array
     {
-        return $this->eventTypes;
+        return $this->eventTypes ?? [];
     }
 }

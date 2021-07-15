@@ -34,6 +34,6 @@ class CreateChargeResponse extends EmbeddedResponse
      */
     public function getCharges(): array
     {
-        return $this->charges;
+        return $this->charges ?? [];
     }
 }

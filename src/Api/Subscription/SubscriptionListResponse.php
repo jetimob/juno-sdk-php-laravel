@@ -23,6 +23,6 @@ class SubscriptionListResponse extends EmbeddedResponse
      */
     public function getSubscriptions(): array
     {
-        return $this->subscriptions;
+        return $this->subscriptions ?? [];
     }
 }

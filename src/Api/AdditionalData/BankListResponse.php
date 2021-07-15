@@ -20,6 +20,6 @@ class BankListResponse extends EmbeddedResponse
      */
     public function getBanks(): array
     {
-        return $this->banks;
+        return $this->banks ?? [];
     }
 }

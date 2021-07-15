@@ -20,6 +20,6 @@ class BusinessAreasListResponse extends EmbeddedResponse
      */
     public function getBusinessAreas(): array
     {
-        return $this->businessAreas;
+        return $this->businessAreas ?? [];
     }
 }

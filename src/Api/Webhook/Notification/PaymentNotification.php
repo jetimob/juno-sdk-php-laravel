@@ -31,6 +31,6 @@ class PaymentNotification
      */
     public function getPaymentData(): array
     {
-        return $this->data;
+        return $this->data ?? [];
     }
 }

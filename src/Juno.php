@@ -50,7 +50,7 @@ class Juno implements HttpProviderContract
      */
     public function getConfig(): array
     {
-        return $this->config;
+        return $this->config ?? [];
     }
 
     /**

@@ -23,6 +23,6 @@ class DocumentListResponse extends EmbeddedResponse
      */
     public function getDocuments(): array
     {
-        return $this->documents;
+        return $this->documents ?? [];
     }
 }

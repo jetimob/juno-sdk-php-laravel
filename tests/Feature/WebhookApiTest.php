@@ -28,7 +28,7 @@ class WebhookApiTest extends AbstractTestCase
     /** @test */
     public function listWebhooksShouldSucceed(): void
     {
-        $response = $this->api->using(config('juno.resource_token'))->list();
+        $response = $this->api->list();
         $this->assertInstanceOf(WebhookListResponse::class, $response);
 
         $webhooks = $response->getWebhooks();
@@ -41,7 +41,7 @@ class WebhookApiTest extends AbstractTestCase
     /** @test */
     public function deleteWebhooksShouldSucceed(): void
     {
-        $response = $this->api->using(config('juno.resource_token'))->delete('');
+        $response = $this->api->delete('');
         $this->assertSame(204, $response->getStatusCode());
     }
 

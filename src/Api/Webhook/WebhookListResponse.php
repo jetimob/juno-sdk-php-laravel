@@ -11,7 +11,7 @@ use Jetimob\Juno\Entity\WebhookResource;
 class WebhookListResponse extends EmbeddedResponse
 {
     /** @var WebhookResource[] $webhooks */
-    protected array $webhooks;
+    protected array $webhooks = [];
 
     public function webhooksItemType(): string
     {
@@ -23,6 +23,6 @@ class WebhookListResponse extends EmbeddedResponse
      */
     public function getWebhooks(): array
     {
-        return $this->webhooks;
+        return $this->webhooks ?? [];
     }
 }

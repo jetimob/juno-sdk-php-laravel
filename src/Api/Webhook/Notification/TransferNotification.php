@@ -31,6 +31,6 @@ class TransferNotification
      */
     public function getTransferData(): array
     {
-        return $this->data;
+        return $this->data ?? [];
     }
 }
