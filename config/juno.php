@@ -2,6 +2,25 @@
 
 declare(strict_types=1);
 
+/*
+ |--------------------------------------------------------------------------
+ | ENDPOINTS
+ |--------------------------------------------------------------------------
+ |
+ | @link https://dev.juno.com.br/api/v2#tag/Componentes
+ |
+ */
+$endpoints = [
+    'sandbox' => [
+        'base_uri' => 'https://sandbox.boletobancario.com/api-integration/',
+        'oauth_token_uri' => 'https://sandbox.boletobancario.com/authorization-server/oauth/token',
+    ],
+    'production' => [
+        'base_uri' => 'https://api.juno.com.br/',
+        'oauth_token_uri' => 'https://api.juno.com.br/authorization-server/oauth/token',
+    ],
+];
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +111,7 @@ return [
         */
 
         'guzzle' => [
-            'base_uri' => 'https://sandbox.boletobancario.com/api-integration/',
+            'base_uri' => $endpoints[env('JUNO_ENVIRONMENT', 'sandbox')]['base_uri'],
 
             /*
             |--------------------------------------------------------------------------
@@ -201,8 +220,8 @@ return [
                 \Jetimob\Http\Authorization\OAuth\TokenResolvers\OAuthClientCredentialsTokenResolver::class,
         ],
 
-        'oauth_authorization_uri' => 'https://sandbox.boletobancario.com/authorization-server/',
-        'oauth_token_uri' => 'https://sandbox.boletobancario.com/authorization-server/oauth/token',
+        'oauth_authorization_uri' => ' ',
+        'oauth_token_uri' => $endpoints[env('JUNO_ENVIRONMENT', 'sandbox')]['oauth_token_uri'],
     ],
 
     /*
