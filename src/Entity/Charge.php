@@ -8,6 +8,10 @@ class Charge implements \JsonSerializable
 {
     use Serializable;
 
+    public const PAYMENT_TYPE_BOLETO = 'BOLETO';
+    public const PAYMENT_TYPE_BOLETO_PIX = 'BOLETO_PIX';
+    public const PAYMENT_TYPE_CREDIT_CARD = 'CREDIT_CARD';
+
     /**
      * @var string $description Nesse campo deverá ser inserido informações referentes a produtos, serviços e afins
      * relacionados a essa cobrança.

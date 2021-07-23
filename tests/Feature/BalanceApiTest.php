@@ -2,9 +2,9 @@
 
 namespace Jetimob\Juno\Tests\Feature;
 
-use GuzzleHttp\Exception\ClientException;
 use Jetimob\Juno\Api\Balance\BalanceApi;
 use Jetimob\Juno\Api\Balance\BalanceResponse;
+use Jetimob\Juno\Exception\JunoRequestException;
 use Jetimob\Juno\Facades\Juno;
 use Jetimob\Juno\Tests\AbstractTestCase;
 
@@ -38,7 +38,7 @@ class BalanceApiTest extends AbstractTestCase
     /** @test */
     public function requestWithoutCredentialsShouldFail(): void
     {
-        $this->expectException(ClientException::class);
-        $this->api->using('')->get();
+        $this->expectException(JunoRequestException::class);
+        $this->api->using('123')->get();
     }
 }

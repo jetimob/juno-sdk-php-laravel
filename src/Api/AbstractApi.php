@@ -3,6 +3,7 @@
 namespace Jetimob\Juno\Api;
 
 use Jetimob\Http\Request;
+use Jetimob\Juno\Exception\InvalidArgumentException;
 use Jetimob\Juno\Exception\JunoRequestException;
 use Jetimob\Juno\Juno;
 
@@ -49,6 +50,10 @@ abstract class AbstractApi extends \Jetimob\Http\AbstractApi
      */
     public function using(string $resourceToken): self
     {
+        if (empty($resourceToken)) {
+            throw new InvalidArgumentException('O token de recurso NÃO pode ser vazio!');
+        }
+
         $this->resourceToken = $resourceToken;
         return $this;
     }

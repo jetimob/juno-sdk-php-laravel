@@ -58,6 +58,34 @@ class ChargeApiTest extends AbstractTestCase
     }
 
     /** @test */
+    public function createPixCharge(): void
+    {
+        $amount = 11.1;
+        $response = $this->api->create(
+            Charge::newWithAmount('Descrição do pagamento', $amount)
+                ->setPaymentTypes([Charge::PAYMENT_TYPE_BOLETO_PIX]),
+            Billing::new(
+                'Cecília Marcela Brito',
+                '09060298993',
+                'ceciliamarcelabrito-82@mciimoveis.com.br',
+                Address::new(
+                    'Rua Vieira Portuense',
+                    '880',
+                    'São Paulo',
+                    'SP',
+                    '04347080'
+                )->setNeighborhood('Jardim Oriental')
+            ),
+        );
+        $this->assertInstanceOf(CreateChargeResponse::class, $response);
+
+        $charges = $response->getCharges();
+        $this->assertNotEmpty($charges);
+        $ch0 = $charges[0];
+        $this->assertEquals($amount, $ch0->getAmount());
+    }
+
+    /** @test */
     public function chargesListShouldSucceed(): void
     {
         $response = $this->api->list();

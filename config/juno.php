@@ -217,10 +217,9 @@ return [
 
         'oauth_access_token_resolver' => [
             \Jetimob\Http\Authorization\OAuth\OAuthFlow::CLIENT_CREDENTIALS =>
-                \Jetimob\Http\Authorization\OAuth\TokenResolvers\OAuthClientCredentialsTokenResolver::class,
+                \Jetimob\Juno\Http\OAuthClientCredentialsTokenResolver::class,
         ],
 
-        'oauth_authorization_uri' => ' ',
         'oauth_token_uri' => $endpoints[env('JUNO_ENVIRONMENT', 'sandbox')]['oauth_token_uri'],
     ],
 

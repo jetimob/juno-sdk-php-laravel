@@ -30,7 +30,7 @@ class DocumentApiTest extends AbstractTestCase
     /** @test */
     public function listDocumentsShouldSucceed(): void
     {
-        $response = $this->api->using('')->list();
+        $response = $this->api->list();
         $this->assertInstanceOf(DocumentListResponse::class, $response);
         $docs = $response->getDocuments();
 
