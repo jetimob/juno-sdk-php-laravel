@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.0.0-beta.2](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v2.0.0-beta.2) (2021-07-23)
+## [2.0.0-beta.3](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v2.0.0-beta.3) (2021-08-25)
 
 
 ### ⚠ BREAKING CHANGES
@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+* adiciona ChargeData para receber notificações do tipo CHARGE_STATUS_CHANGED ([36769d9](https://github.com/jetimob/juno-sdk-php-laravel/commit/36769d913eb46eae864f86dd8dc618033f186acd))
+* adiciona mapping do objeto enviado pelo webhook gerado por CHARGE_STATUS_CHANGED ([0a8dd6c](https://github.com/jetimob/juno-sdk-php-laravel/commit/0a8dd6c6301651b45d6af6c556820abd0e2a39fc))
 * move lógica do AbstractApi para o pacote `jetimob/http-php-laravel` ([c27ba45](https://github.com/jetimob/juno-sdk-php-laravel/commit/c27ba456c1a1c16c6acfa2a704d7b4a82942a3cb))
 * muda endpoint de acordo com a variável ambiente ([68da080](https://github.com/jetimob/juno-sdk-php-laravel/commit/68da0807f9b73c36091b226bb4796105ea8c4575))
 
