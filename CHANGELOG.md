@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.0.0-beta.3](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v2.0.0-beta.3) (2021-08-25)
+## [2.0.0-beta.4](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v2.0.0-beta.4) (2021-08-31)
 
 
 ### ⚠ BREAKING CHANGES
@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * adiciona `bankNumber` ao construtor estático de `BankAccount` ([8393199](https://github.com/jetimob/juno-sdk-php-laravel/commit/83931996e98faf3a1e7d9dbe51d5f48a9f1dcec1))
 * adiciona interface `JsonSerializable` em objetos de requisição ([bc5dc65](https://github.com/jetimob/juno-sdk-php-laravel/commit/bc5dc6527311bbb36b3e646cd627f5d83e886421))
+* baixa versão do pacote `http-php-laravel` ([5025929](https://github.com/jetimob/juno-sdk-php-laravel/commit/50259293ac3cdaebe567c28b83da3c209f6be00b))
 * corrige comando de instalação do pacote ([fc90cdd](https://github.com/jetimob/juno-sdk-php-laravel/commit/fc90cddc39f1eac4eef25938126c1fd5c9ddc43a))
 * corrige retorno de vetores vazios ([25adc5d](https://github.com/jetimob/juno-sdk-php-laravel/commit/25adc5d34d307d14ca03efac536aed24ddb69548))
 * refatora `setBankNumber` para aceitar nullable ([6d9ac92](https://github.com/jetimob/juno-sdk-php-laravel/commit/6d9ac921cb055d435bd15cf7905c9f76850928e5))
