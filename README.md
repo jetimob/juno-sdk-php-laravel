@@ -13,12 +13,18 @@ também desenvolvido dentro da Jetimob.
 
 > Os comandos abaixo devem ser executados dentro da pasta raíz do projeto onde o pacote deve ser instalado.
 
+## Versão 2.0
+
+> ATENÇÃO!
+>
+> A versão `2.x` **não** é compatível com as versões inferiores!
+
 ## Instalação
 
 Utilizando o composer:
 
 ```shell
-composer require jetimob/juno-sdk-php-laravel@v2
+composer require jetimob/juno-sdk-php-laravel
 ```
 
 ## Configuração
@@ -29,24 +35,62 @@ Para começar, as configurações do pacote devem ser publicadas através do com
 php artisan juno:install
 ````
 
-Este comando irá criar o arquivo de configuração `config/juno.php` para que você possa modificar conforme a necessidade
-do seu projeto.
+Este comando irá criar o arquivo de configuração `juno.php` no diretório `config` para que você possa modificar conforme
+a necessidade do seu projeto.
 
-Algumas configurações são obrigatórias e únicas:
+As únicas configurações obrigatórias que precisam ser especificadas, são:
 
 - resource_token
 - oauth_client_id
 - oauth_client_secret
 
+
+> Mais informações sobre as demais configurações podem ser encontradas no próprio [arquivo](./config/juno.php).
+
+### `resource_token`
+
+Muitos dos recursos também necessitam de um token de recurso, *X-Resource-Token* que identifica a conta digital
+que deverá ser utilizada durante a execução de uma operação. Cada conta digital tem o seu próprio token de
+recurso.
+Contas digitais criadas via API incluem o token de recurso na resposta da requisição. Para obter o token de
+recurso de uma conta digital já existente ou para redefinir o token de recurso, o cliente precisa acessar o
+painel do cliente Juno e realizar esta operação na aba Integração, opção Token Privado.
+
+O `resource_token` é utilizado como valor padrão para o header 'X-Resource-Token' que identifica uma conta
+dentro da API da Juno. Esse valor pode ser sobrescrito programaticamente utilizando o método `using` de cada API.
+
+Ex.:
+
+```php
+Juno::balance()->using('[Novo X-Resource-Token]')->get();
+```
+
+### `oauth_client_id`
+
+### `oauth_client_secret`
+
 ## Uso
+
+Sempre que for chamar qualquer api do pacote **juno-sdk-php-laravel*, utilize o namespace `Jetimob\Juno\Facades\Juno`
+ou, simplesmente, `Juno`. O namespace `Juno` é registrado automaticamente pelo **Laravel**, ou seja, a importação pode
+ser feita apenas com `use Juno;` no topo de um arquivo.
+
+
+Qualquer uma das implementações de *API* encontradas na configuração `api_impl` podem ser acessadas diretamente através
+da façade `Juno`, invocando um método de mesmo nome da chave de configuração. Em outras palavras, a chave `account`, que
+representa a classe `\Jetimob\Juno\Api\Account\AccountApi::class`, dentro do vetor `api_impl` do arquivo de
+configurações pode ser invocada com `\Juno::account()`. O retorno desta função é uma instância de
+`\Jetimob\Juno\Api\Account\AccountApi::class` (definido pelo arquivo de configuração).
 
 ```php
 
 ```
 
+## Adicionando/modificando uma implementação de API
+
 ## Licença
 
 juno-sdk-php-laravel está licenciado sob [The MIT License (MIT)](LICENSE).
 
---- 
+---
 Mais informações sobre a API da Juno podem ser encontradas [aqui](https://dev.juno.com.br/api/v2) e [aqui (PDF detalhado)](https://dev.juno.com.br/junoAPI20Integration.pdf).

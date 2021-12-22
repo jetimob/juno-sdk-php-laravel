@@ -27,6 +27,3 @@ All notable changes to this project will be documented in this file. See [standa
 * corrige comando de instalação do pacote ([fc90cdd](https://github.com/jetimob/juno-sdk-php-laravel/commit/fc90cddc39f1eac4eef25938126c1fd5c9ddc43a))
 * corrige retorno de vetores vazios ([25adc5d](https://github.com/jetimob/juno-sdk-php-laravel/commit/25adc5d34d307d14ca03efac536aed24ddb69548))
 * refatora `setBankNumber` para aceitar nullable ([6d9ac92](https://github.com/jetimob/juno-sdk-php-laravel/commit/6d9ac921cb055d435bd15cf7905c9f76850928e5))
-
-
-* implementa nova forma de interação com o SDK ([e0c67ad](https://github.com/jetimob/juno-sdk-php-laravel/commit/e0c67ad15207df939c3e9cd466ba61cd6cabdebc))
