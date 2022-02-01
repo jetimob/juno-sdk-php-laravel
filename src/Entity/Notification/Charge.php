@@ -8,6 +8,12 @@ class Charge
 {
     use Serializable;
 
+    public const STATUS_ACTIVE = 'ACTIVE';
+    public const STATUS_CANCELLED = 'CANCELLED';
+    public const STATUS_MANUAL_RECONCILIATION = 'MANUAL_RECONCILIATION';
+    public const STATUS_FAILED = 'FAILED';
+    public const STATUS_PAID = 'PAID';
+
     protected string $id;
     protected string $code;
     protected string $dueDate;
