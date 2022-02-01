@@ -12,6 +12,8 @@ class Charge
     protected string $code;
     protected string $dueDate;
     protected string $amount;
+    protected string $status;
+    protected Payer $payer;
 
     /**
      * @return string
@@ -43,5 +45,21 @@ class Charge
     public function getAmount(): string
     {
         return $this->amount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return Payer
+     */
+    public function getPayer(): Payer
+    {
+        return $this->payer;
     }
 }
