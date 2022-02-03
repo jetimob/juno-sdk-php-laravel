@@ -9,11 +9,11 @@ class Address
 {
     use Serializable;
 
-    /** @var string $street Rua. */
-    protected string $street;
+    /** @var string|null $street Rua. */
+    protected ?string $street;
 
-    /** @var string $number Número. Se não houver, envie N/A. */
-    protected string $number;
+    /** @var string|null $number Número. Se não houver, envie N/A. */
+    protected ?string $number;
 
     /** @var string|null $complement Complemento. */
     protected ?string $complement = null;
@@ -21,27 +21,27 @@ class Address
     /** @var string|null $neighborhood Bairro. */
     protected ?string $neighborhood = null;
 
-    /** @var string $city Cidade. */
-    protected string $city;
+    /** @var string|null $city Cidade. */
+    protected ?string $city;
 
-    /** @var string $state Estado em sigla de Unidade Federativa (UF). */
-    protected string $state;
+    /** @var string|null $state Estado em sigla de Unidade Federativa (UF). */
+    protected ?string $state;
 
-    /** @var string $postCode Código de Endereçamento Postal no Brasil (CEP). */
-    protected string $postCode;
+    /** @var string|null $postCode Código de Endereçamento Postal no Brasil (CEP). */
+    protected ?string $postCode;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getNumber(): string
+    public function getNumber(): ?string
     {
         return $this->number;
     }
@@ -63,25 +63,25 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPostCode(): string
+    public function getPostCode(): ?string
     {
         return $this->postCode;
     }
