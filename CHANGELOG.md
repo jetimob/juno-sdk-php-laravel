@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.2](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2022-02-01)
+
+
+### Bug Fixes
+
+* adiciona constantes para utilizar no webhook PAYMENT_NOTIFICATION ([6c3785e](https://github.com/jetimob/juno-sdk-php-laravel/commit/6c3785e1f6a679fd510c47c0abc0ce07ef31e494))
+* adiciona entidade Payer e a propriedade status `Notification/Charge` ([754c8ec](https://github.com/jetimob/juno-sdk-php-laravel/commit/754c8ec8c4d946c17e427377368c97f454ad39a5))
+
 ## [2.0.0-rc.1](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v2.0.0-rc.1) (2021-12-01)
 
 
