@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.3](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2022-02-03)
+
+
+### Features
+
+* adiciona constante para o novo evento de pagamento `PRECONFIRMED` ([9482b3e](https://github.com/jetimob/juno-sdk-php-laravel/commit/9482b3eb783e34e2093442edf1361906edc795cc))
+
+
+### Bug Fixes
+
+* altera as propriedades de `Address` para nullable ([bf88a96](https://github.com/jetimob/juno-sdk-php-laravel/commit/bf88a964304ffb10f70ae7ff39a1dca97cbf9d53))
+
 ## [2.0.0-rc.2](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2022-02-01)
 
 
