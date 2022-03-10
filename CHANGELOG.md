@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.4](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2022-03-10)
+
+
+### Features
+
+* adiciona api para pagamentos com cartão de crédito ([e6c4aac](https://github.com/jetimob/juno-sdk-php-laravel/commit/e6c4aac232b350859436e04691dfb543e98dfb1e))
+
 ## [2.0.0-rc.3](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2022-02-03)
 
 
