@@ -244,6 +244,7 @@ return [
         'charge' => \Jetimob\Juno\Api\Charge\ChargeApi::class,
         'credentials' => \Jetimob\Juno\Api\Credentials\CredentialsApi::class,
         'document' => \Jetimob\Juno\Api\Document\DocumentApi::class,
+        'payment' => \Jetimob\Juno\Api\Payment\PaymentApi::class,
         'pix' => \Jetimob\Juno\Api\Pix\PixApi::class,
         'transference' => \Jetimob\Juno\Api\Transference\TransferenceApi::class,
         'webhook' => \Jetimob\Juno\Api\Webhook\WebhookApi::class,
