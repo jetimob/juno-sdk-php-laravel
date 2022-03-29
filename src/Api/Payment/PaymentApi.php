@@ -5,8 +5,8 @@ namespace Jetimob\Juno\Api\Payment;
 use GuzzleHttp\RequestOptions;
 use Jetimob\Http\Response;
 use Jetimob\Juno\Api\AbstractApi;
-use Jetimob\Juno\Entity\Billing;
 use Jetimob\Juno\Entity\CreditCardDetails;
+use Jetimob\Juno\Entity\PaymentBilling;
 use Throwable;
 
 /**
@@ -61,13 +61,13 @@ class PaymentApi extends AbstractApi
      * @link https://dev.juno.com.br/api/v2#operation/createPayment
      *
      * @param string $chargeId
-     * @param Billing $billing
+     * @param PaymentBilling $billing
      * @param CreditCardDetails $creditCardDetails
      *
      * @return Response
      * @throws Throwable
      */
-    public function createPayment(string $chargeId, Billing $billing, CreditCardDetails $creditCardDetails): Response
+    public function createPayment(string $chargeId, PaymentBilling $billing, CreditCardDetails $creditCardDetails): Response
     {
         return $this->mappedPost('payments', CreatePaymentResponse::class, [
             RequestOptions::JSON => [
