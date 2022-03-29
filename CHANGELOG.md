@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.5](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2022-03-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* corrige entidade billing
+
+### Bug Fixes
+
+* corrige entidade billing ([299a904](https://github.com/jetimob/juno-sdk-php-laravel/commit/299a904fdc85e3106f55003b92e3945d2e92a138))
+
 ## [2.0.0-rc.4](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2022-03-10)
 
 
