@@ -33,14 +33,6 @@ class Billing implements \JsonSerializable
     protected bool $notify = false;
 
     /**
-     * Pagamento realizados com cartão de crédito podem utilizar a funcionalidade de captura tardia. A captura tardia
-     * consiste apenas na autorização de um pagamento sem a sua efetivação, o valor autorizado fica retido no limite
-     * do cartão de crédito do pagador até a captura ou cancelamento.
-     * @var bool $delayed
-     */
-    protected bool $delayed = false;
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -181,25 +173,6 @@ class Billing implements \JsonSerializable
     public function setNotify(bool $notify): Billing
     {
         $this->notify = $notify;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDelayed(): bool
-    {
-        return $this->delayed;
-    }
-
-    /**
-     * @param bool $delayed
-     *
-     * @return Billing
-     */
-    public function setDelayed(bool $delayed): Billing
-    {
-        $this->delayed = $delayed;
         return $this;
     }
 
