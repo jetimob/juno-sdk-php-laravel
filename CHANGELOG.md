@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.6](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2022-04-04)
+
 ## [2.0.0-rc.5](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2022-03-29)
 
 
