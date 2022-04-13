@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.7](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.6...v2.0.0-rc.7) (2022-04-13)
+
+
+### Bug Fixes
+
+* adiciona X-Idempotency-Key aos headers da requisição ([867345a](https://github.com/jetimob/juno-sdk-php-laravel/commit/867345ac88da6dd949a818d244c3bbb34d786355))
+
 ## [2.0.0-rc.6](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2022-04-04)
 
 ## [2.0.0-rc.5](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2022-03-29)
