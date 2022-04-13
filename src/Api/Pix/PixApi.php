@@ -32,8 +32,9 @@ class PixApi extends AbstractApi
             RequestOptions::JSON => [
                 'type' => 'RANDOM_KEY',
             ],
-        ], [
-            'X-Idempotency-Key' => $idempotencyKey,
+            RequestOptions::HEADERS => [
+                'X-Idempotency-Key' => $idempotencyKey,
+            ],
         ]);
     }
 
