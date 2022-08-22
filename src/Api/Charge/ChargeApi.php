@@ -57,7 +57,7 @@ class ChargeApi extends AbstractApi
     public function list(?ListChargesRequest $requestQueryParams = null): ChargeListResponse
     {
         return $this->mappedGet('charges', ChargeListResponse::class, [
-            RequestOptions::QUERY => $requestQueryParams
+            RequestOptions::QUERY => $requestQueryParams?->toArray()
         ]);
     }
 
