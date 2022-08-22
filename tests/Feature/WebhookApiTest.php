@@ -26,7 +26,7 @@ class WebhookApiTest extends AbstractTestCase
     }
 
     /** @test */
-    public function listWebhooksShouldSucceed(): void
+    public function listWebhooksShouldSucceed(): string
     {
         $response = $this->api->list();
         $this->assertInstanceOf(WebhookListResponse::class, $response);
@@ -36,22 +36,34 @@ class WebhookApiTest extends AbstractTestCase
             $doc = $webhooks[0];
             $this->assertInstanceOf(WebhookResource::class, $doc);
         }
+
+        $this->assertIsArray($webhooks);
+
+        $firstWebhookFoundId = $webhooks[0]->getId();
+
+        return $firstWebhookFoundId;
     }
 
-    /** @test */
-    public function deleteWebhooksShouldSucceed(): void
-    {
-        $response = $this->api->delete('');
-        $this->assertSame(204, $response->getStatusCode());
-    }
-
-    /** @test */
-    public function updateWebhooksShouldSucceed(): void
+    /** 
+     * @test 
+     * @depends listWebhooksShouldSucceed
+    */
+    public function updateWebhooksShouldSucceed(string $firstWebhookFoundId): void
     {
         $response = $this->api->using(config('juno.resource_token'))->update(
-            'wbh_E7E530E6041FCF95',
+            $firstWebhookFoundId,
             'INACTIVE',
             ['TRANSFER_STATUS_CHANGED'],
         );
+    }
+
+    /** 
+     * @test 
+     * @depends listWebhooksShouldSucceed
+    */
+    public function deleteWebhooksShouldSucceed(string $firstWebhookFoundId): void
+    {
+        $response = $this->api->delete($firstWebhookFoundId);
+        $this->assertSame(204, $response->getStatusCode());
     }
 }
