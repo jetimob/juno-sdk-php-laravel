@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc.8](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.7...v2.0.0-rc.8) (2022-08-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* não suporta versões do PHP anteriores ao PHP 8
+
+### Bug Fixes
+
+* altera o tipo de dado passado para as opções do método 'mappedGet', que espera receber um array na posição query ([c5a956a](https://github.com/jetimob/juno-sdk-php-laravel/commit/c5a956a6ba63f728cf38fb1bec835d98da032e9a))
+* corrige retorno do método para seguir sua interface ([4af02a2](https://github.com/jetimob/juno-sdk-php-laravel/commit/4af02a20ff431ea6f873bc6a45c4d9bf20e98d6b))
+
+
+* atualizada dependências do projeto ([3255940](https://github.com/jetimob/juno-sdk-php-laravel/commit/3255940f5931b27f0995d4b02a89db8ba6dac5ea))
+
 ## [2.0.0-rc.7](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.6...v2.0.0-rc.7) (2022-04-13)
 
 
