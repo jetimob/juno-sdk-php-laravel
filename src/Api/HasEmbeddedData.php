@@ -2,8 +2,6 @@
 
 namespace Jetimob\Juno\Api;
 
-use Jetimob\Http\Response;
-
 trait HasEmbeddedData
 {
     public function hydrate(array $dataObject): static
