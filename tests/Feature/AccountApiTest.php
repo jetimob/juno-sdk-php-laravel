@@ -131,6 +131,11 @@ class AccountApiTest extends AbstractTestCase
         $this->assertInstanceOf(FindAccountResponse::class, $response);
         $this->assertNotEmpty($response->getId());
         $this->assertNotEmpty($response->getType());
+        $this->assertIsString($response->getStatus());
+        $this->assertIsString($response->getPersonType());
+        $this->assertIsString($response->getDocument());
+        $this->assertIsString($response->getCreatedOn());
+        $this->assertIsString($response->getAccountNumber());
     }
 
     /**
