@@ -10,8 +10,12 @@ use Jetimob\Juno\Api\JunoResponse;
 class FindAccountResponse extends JunoResponse
 {
     protected string $id;
-
     protected string $type;
+    protected string $status;
+    protected string $personType;
+    protected string $document;
+    protected string $createdOn;
+    protected string $accountNumber;
 
     /**
      * @return string
@@ -27,5 +31,45 @@ class FindAccountResponse extends JunoResponse
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonType(): string
+    {
+        return $this->personType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocument(): string
+    {
+        return $this->document;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedOn(): string
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountNumber(): string
+    {
+        return $this->accountNumber;
     }
 }
