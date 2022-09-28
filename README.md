@@ -1,6 +1,13 @@
 juno-sdk-php-laravel
 ====================
 
+# AVISO!
+
+A carteira de clientes da Juno [foi comprada pela iugu](https://www.linkedin.com/posts/iugu_iugu-compra-carteira-de-clientes-da-juno-activity-6975170872642842624-8sZO/?utm_source=share&utm_medium=member_desktop),
+e, por isso, este pacote se tornará obsoleto.
+
+---
+
 juno-sdk-php-laravel foi criado e é mantido pela equipe [Jetimob](https://github.com/jetimob). É um SDK utilizado para
 interagir com a API da [Juno](https://juno.com.br) de forma simples e direta. A complexidade de autenticação
 [OAuth2](https://oauth.net/2/) é abstraída pelo pacote [http-php-laravel](https://github.com/jetimob/http-php-laravel/),
@@ -67,7 +74,11 @@ Juno::balance()->using('[Novo X-Resource-Token]')->get();
 
 ### `oauth_client_id`
 
+[Instruções para obtenção aqui](https://dev.juno.com.br/api/v2#operation/getAccessToken).
+
 ### `oauth_client_secret`
+
+[Instruções para obtenção aqui](https://dev.juno.com.br/api/v2#operation/getAccessToken).
 
 ## Uso
 
@@ -81,12 +92,6 @@ da façade `Juno`, invocando um método de mesmo nome da chave de configuração
 representa a classe `\Jetimob\Juno\Api\Account\AccountApi::class`, dentro do vetor `api_impl` do arquivo de
 configurações pode ser invocada com `\Juno::account()`. O retorno desta função é uma instância de
 `\Jetimob\Juno\Api\Account\AccountApi::class` (definido pelo arquivo de configuração).
-
-```php
-
-```
-
-## Adicionando/modificando uma implementação de API
 
 ## Licença
 
