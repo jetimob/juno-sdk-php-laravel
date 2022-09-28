@@ -2,8 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.0.0-rc.8](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.7...v2.0.0-rc.8) (2022-08-30)
+## [2.0.0](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.8...v2.0.0) (2022-09-28)
 
+
+### Features
+
+* adiciona propriedades da resposta do `FindAccount` ([24c9ca1](https://github.com/jetimob/juno-sdk-php-laravel/commit/24c9ca1438b4729f867fc30dc9aa42cf6cd06ec7))
+
+
+## [2.0.0-rc.8](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.7...v2.0.0-rc.8) (2022-08-30)
 
 ### ⚠ BREAKING CHANGES
 
@@ -89,3 +96,21 @@ All notable changes to this project will be documented in this file. See [standa
 * corrige comando de instalação do pacote ([fc90cdd](https://github.com/jetimob/juno-sdk-php-laravel/commit/fc90cddc39f1eac4eef25938126c1fd5c9ddc43a))
 * corrige retorno de vetores vazios ([25adc5d](https://github.com/jetimob/juno-sdk-php-laravel/commit/25adc5d34d307d14ca03efac536aed24ddb69548))
 * refatora `setBankNumber` para aceitar nullable ([6d9ac92](https://github.com/jetimob/juno-sdk-php-laravel/commit/6d9ac921cb055d435bd15cf7905c9f76850928e5))
+
+### [1.1.4](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.3...v1.1.4) (2021-04-13)
+
+
+### Bug Fixes
+
+* The linesOfBusiness field returns and is required ([00b0ac4](https://github.com/jetimob/juno-sdk-php-laravel/commit/00b0ac4f32e29a07c6fbd32b158f437a69e50266))
+
+### [1.1.3](https://github.com/jetimob/juno-sdk-php-laravel/compare/v1.1.2...v1.1.3) (2021-04-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* New API fields to create new account, and removed the unlisted fields on the Juno's documentation
+
+### Features
+
+* New API fields to create new account, and removed the unlisted fields on the Juno's documentation ([e5545b1](https://github.com/jetimob/juno-sdk-php-laravel/commit/e5545b1fb7fad4caa4e7d390eb839207f2c8ee4b))
