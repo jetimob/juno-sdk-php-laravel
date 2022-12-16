@@ -83,9 +83,9 @@ class Charge implements \JsonSerializable
     protected ?float $interest = null;
 
     /**
-     * @var int|null $discountAmount Valor absoluto de desconto.
+     * @var float|null $discountAmount Valor absoluto de desconto.
      */
-    protected ?int $discountAmount = null;
+    protected ?float $discountAmount = null;
 
     /**
      * @var int|null $discountDays Número de dias de desconto.
@@ -216,9 +216,9 @@ class Charge implements \JsonSerializable
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getDiscountAmount(): ?int
+    public function getDiscountAmount(): ?float
     {
         return $this->discountAmount;
     }
@@ -389,10 +389,10 @@ class Charge implements \JsonSerializable
     }
 
     /**
-     * @param int|null $discountAmount Valor absoluto de desconto.
+     * @param float|null $discountAmount Valor absoluto de desconto.
      * @return Charge
      */
-    public function setDiscountAmount(?int $discountAmount): Charge
+    public function setDiscountAmount(?float $discountAmount): Charge
     {
         $this->discountAmount = $discountAmount;
         return $this;
