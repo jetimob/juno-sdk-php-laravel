@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.8...v2.0.1) (2022-12-16)
+
+
+### Features
+
+* adiciona propriedades da resposta do `FindAccount` ([24c9ca1](https://github.com/jetimob/juno-sdk-php-laravel/commit/24c9ca1438b4729f867fc30dc9aa42cf6cd06ec7))
+
+
+### Bug Fixes
+
+* altera para `float` a propriedade `discountAmount` ([0b1fe7f](https://github.com/jetimob/juno-sdk-php-laravel/commit/0b1fe7f20712d28954f20693595671bd82573ea9))
+
 ## [2.0.0](https://github.com/jetimob/juno-sdk-php-laravel/compare/v2.0.0-rc.8...v2.0.0) (2022-09-28)
 
 
