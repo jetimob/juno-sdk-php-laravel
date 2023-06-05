@@ -7,13 +7,13 @@
         "php": "^8.0",
         "ext-json": "*",
         "jetimob/http-php-laravel": "^2",
-        "illuminate/support": "^9.0",
-        "illuminate/console": "^9.0",
-        "illuminate/container": "^9.0"
+        "illuminate/support": "^9.0 | ^10.0",
+        "illuminate/console": "^9.0 | ^10.0",
+        "illuminate/container": "^9.0 | ^10.0"
     },
     "require-dev": {
         "orchestra/testbench": "^7.6.1",
-        "phpunit/phpunit": "^v9.5.5"
+        "phpunit/phpunit": "^v9.5.5 | ^10.0"
     },
     "license": "MIT",
     "autoload": {
